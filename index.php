@@ -32,7 +32,7 @@
 
         <label for="BeerIBU">IBU</label><br>
         <input type="number" name="BeerIBU" id="BeerIBU"><br><br>
-
+        <a href="Sign-up.php">Sign up</a>or<a href="Sign-in.php">Sign in</a>
         <input type="submit" value="Create">
     </form>
 
