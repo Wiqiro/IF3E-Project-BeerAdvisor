@@ -5,14 +5,14 @@ global $bdd;
 
 if (isset($_POST['confirm'])) {
     $username = htmlspecialchars($_POST['username']);
-    $email = htmlspecialchars($_POST['email']);
-    $date = htmlspecialchars($_POST['birthday']);
+    $date = date("Y-m-d");
     $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $query = "INSERT INTO user(username,prenom,date_naissance) VALUES(?,?,?)";
-    $request = $bdd->prepare($query);
-    $request->execute(array($username, $passwordHash, $date));
-    header("Location:index.php");
+    if($_POST['password']==$_POST['confirm_password']) {
+        $query = "INSERT INTO user (Username,Password,Creation_date) VALUES (?,?,?)";
+        $request = $bdd->prepare($query);
+        $request->execute(array($username, $passwordHash, $date));
+        header("Location:Sign-in.php");
+    }
 } ?>
 
 
@@ -38,15 +38,15 @@ if (isset($_POST['confirm'])) {
                 <label for="username" class="label_register"></label>
                 <input type="text" name="username" id="username" placeholder="Username" required>
             </td>
-
             <td>
-                <label for="email"></label>
-                <input type="email" name="email" id="email" placeholder="E-mail" required>
+                <label for="password"></label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
             </td>
             <tr>
                 <td>
-                    <label for="password"></label>
-                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <label for="date"></label>
+                    <input type="date" name="birthday" id="date" value="" required>
+
                 </td>
                 <td>
                     <label for="confirm_password"></label>
@@ -55,13 +55,18 @@ if (isset($_POST['confirm'])) {
                 </td>
             </tr>
         </table>
-
-        <label for="date"></label>
-        <input type="date" name="birthday" id="date" value="" required>
-
         <label for="sign-up"></label>
         <input type="submit" class="registerbtn" value="Sign-up" name="confirm">
+        <div>
+            <?php
+            if(isset($_POST['confirm'])){
+                if($_POST['password']!=$_POST['confirm_password']){
+                    echo "Passwords doesn't match";
+                }
+            }
 
+            ?>
+        </div>
         </table>
 
         <hr>
