@@ -1,3 +1,5 @@
+@import url("https://www.w3schools.com/w3css/4/w3.css");
+
 .image_icon {
     width: 100px;
     height: 100px;
@@ -5,7 +7,7 @@
 
 
 div {
-    font: 30px "sans-serif";
+    /* font: 30px "sans-serif"; */
     display: inline-block;
 }
 
@@ -56,7 +58,7 @@ input[type=date]{
 .sign_in{
     padding: 10px;
     background-color: grey;
-    font : 0.8em kable;
+    /* font : 0.8em kable; */
 }
 a:link{
     color: black;
@@ -84,6 +86,6 @@ a:visited{
 
 .title {
     text-align: start;
-    font : 2em "Cooper Black";
+    /* font : 2em "Cooper Black"; */
 }
 

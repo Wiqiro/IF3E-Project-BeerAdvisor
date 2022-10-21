@@ -24,7 +24,7 @@ if($res){
 ?>
 
 
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Beer advisor</title>

@@ -15,12 +15,12 @@ if (isset($_POST['confirm'])) {
 } ?>
 
 
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Beer advisor</title>
-    <meta name="author" content="Quetin,Eloi,Willianm">
+    <meta name="author" content="Quentin,Eloi,William">
     <meta name="description" content="Page to connect or subscribe">
     <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="page.css">

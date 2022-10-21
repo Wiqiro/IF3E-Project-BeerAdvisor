@@ -3,7 +3,7 @@ if(isset($_POST['note1']) || isset($_POST['note2']) || isset($_POST['note3']) ||
 }
 ?>
 
-<html lang ="fr">
+<html lang ="en">
 <head>
     <meta charset ="UTF-8">
     <title>Beer advisor</title>
