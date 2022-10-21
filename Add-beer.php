@@ -8,7 +8,7 @@
     <title>Beer advisor</title>
 </head>
 <body>
-    <!-- <h1 style="text-align:center"><strong>BeerAdvisor</strong></h1>
+    <h1 style="text-align:center"><strong>BeerAdvisor</strong></h1>
     <h2>Add a new beer</h2>
     <form action="new_beer.php">
         <label for="BeerName">Name of the beer</label><br>
@@ -32,13 +32,17 @@
 
         <label for="BeerIBU">IBU</label><br>
         <input type="number" name="BeerIBU" id="BeerIBU"><br><br>
+        <a href="Sign-up.php">Sign up</a>or<a href="Sign-in.php">Sign in</a>
         <input type="submit" value="Create">
-    </form> -->
-    <a href="Sign-up.php">Sign up</a><br>
-    <a href="Sign-in.php">Sign in</a><br>
-    <a href="Add-beer.php">Add a new beer</a><br>
+    </form>
 
+    <?php
 
+        /* $db = new PDO("mysql:host=localhost;dbname=beeradvisor.sql;charset=utf8", "root", "");
+        $req = $db->prepare("INSERT INTO beer (Name, Alcohol, IBU, Aroma, Clarity, Style) VALUES ("Beer1", 784, 20, "Grass", "Straw", "IBU");
+ */
+        echo "bonjour"; 
+    ?>
     
 </body>
 </html>
