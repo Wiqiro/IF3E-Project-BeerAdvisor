@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST['note1']) || isset($_POST['note2']) || isset($_POST['note3']) || isset($_POST['note4']) || isset($_POST['note5']))
-}
+
 ?>
 
 <html lang ="en">
