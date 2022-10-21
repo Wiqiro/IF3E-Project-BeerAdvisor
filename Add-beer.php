@@ -14,6 +14,7 @@ if (isset($_POST['create'])) {
    $query = "INSERT INTO beer(name, alcohol, color, style, ibu, last_modified) VALUES(?,?,?,?,?,?)";
    $request = $bdd->prepare($query);
    $request->execute(array($name, $alcohol, $color, $style, $ibu, $date));
+   header("Location:index.php");
 } ?>
 
 
