@@ -9,15 +9,15 @@ if (isset($_POST['create'])) {
    $ibu = htmlspecialchars($_POST['BeerIBU']);
    $alcohol = htmlspecialchars($_POST['BeerAlcohol']);
    $style = htmlspecialchars($_POST['BeerStyle']);
-
+   $date = date("Y-m-d");
 
    /* $query = "INSERT INTO beer(name,color,ibu) VALUES(?,?,?)";
    $request = $bdd->prepare($query);
    $request->execute(array($name, $color, $ibu)); */
 
-   $query = "INSERT INTO beer(name, alcohol, color, style, ibu) VALUES(?,?,?,?,?)";
+   $query = "INSERT INTO beer(name, alcohol, color, style, ibu, last_modified) VALUES(?,?,?,?,?,?)";
    $request = $bdd->prepare($query);
-   $request->execute(array($name, $alcohol, $color, $style, $ibu));
+   $request->execute(array($name, $alcohol, $color, $style, $ibu, $date));
 } ?>
 
 
