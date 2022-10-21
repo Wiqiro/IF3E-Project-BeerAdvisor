@@ -9,7 +9,7 @@ if (isset($_POST['confirm'])) {
     $date = htmlspecialchars($_POST['birthday']);
     $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO etudiant(nom,prenom,date_naissance) VALUES(?,?,?)";
+    $query = "INSERT INTO user(username,prenom,date_naissance) VALUES(?,?,?)";
     $request = $bdd->prepare($query);
     $request->execute(array($username, $passwordHash, $date));
 } ?>

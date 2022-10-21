@@ -7,7 +7,7 @@ if(isset($_POST['confirm'])){
 $email = htmlspecialchars($_POST['email']);
 $password = htmlspecialchars($_POST['password']);
 
-$query = "SELECT * FROM etudiant WHERE nom = ?";
+$query = "SELECT * FROM user WHERE Username = ?";
 $request = $bdd->prepare($query);
 $request->execute(array($email));
 $res = $request->fetch(PDO::FETCH_ASSOC);
@@ -16,8 +16,8 @@ var_dump($email);
 if($res){
     $passwordHash = $res['prenom'];
      if(password_verify($password, $passwordHash)){
-         echo "connection reussi";
-     }else{echo "t'es pas connecté le bouf";};
+         echo "Connection réussie";
+     }else{echo "Erreur de connection";};
 }}
 
 
@@ -34,7 +34,7 @@ if($res){
     <link rel="stylesheet" href="page.css">
 </head>
 <body class="body" >
-<a href="index.php" ><img src="BeerAdvisor.png"></a>
+<a href="index.php"><img src="BeerAdvisor.png"></a>
 <form action="" method="post">
     <div >
         <h1>Sign up</h1>

@@ -1,3 +1,26 @@
+<?php
+require_once("connection.php");
+
+global $bdd;
+
+if (isset($_POST['create'])) {
+   $name = htmlspecialchars($_POST['BeerName']);
+   $color = htmlspecialchars($_POST['BeerColor']);
+   $ibu = htmlspecialchars($_POST['BeerIBU']);
+   $alcohol = htmlspecialchars($_POST['BeerAlcohol']);
+   $style = htmlspecialchars($_POST['BeerStyle']);
+
+
+   /* $query = "INSERT INTO beer(name,color,ibu) VALUES(?,?,?)";
+   $request = $bdd->prepare($query);
+   $request->execute(array($name, $color, $ibu)); */
+
+   $query = "INSERT INTO beer(name, alcohol, color, style, ibu) VALUES(?,?,?,?,?)";
+   $request = $bdd->prepare($query);
+   $request->execute(array($name, $alcohol, $color, $style, $ibu));
+} ?>
+
+
 <html lang ="en">
 <head>
     <meta charset ="UTF-8">
@@ -10,12 +33,16 @@
 <body>
     <h1 style="text-align:center"><strong>BeerAdvisor</strong></h1>
     <h2>Add a new beer</h2>
-    <form action="new_beer.php">
-        <label for="BeerName">Name of the beer</label><br>
-        <input type="text" name="BeerName" id="BeerName"><br><br>
 
-        <label for="BeerColor">Color</label><br>
-        <select name="BeerColor" id="BeerColor">
+    <form action="" method="post">
+      <label for="BeerName">Name of the beer</label><br>
+      <input type="text" name="BeerName" id="BeerName"><br><br>
+
+      <label for="BeerAlcohol">Alcohol level</label><br>
+      <input type="number" name="BeerAlcohol" id="BeerAlcohol"><br><br>
+
+      <label for="BeerColor">Color</label><br>
+      <select name="BeerColor" id="BeerColor">
             <option value="PaleStraw">Pale straw</option>
             <option value="Straw">Straw</option>
             <option value="PaleGold">Pale gold</option>
@@ -28,21 +55,23 @@
             <option value="RubyBrown">Ruby brown</option>
             <option value="DeepBrown">Deep brown</option>
             <option value="Black">Black</option>
-        </select><br><br>
+      </select><br><br>
 
-        <label for="BeerIBU">IBU</label><br>
-        <input type="number" name="BeerIBU" id="BeerIBU"><br><br>
-        <a href="Sign-up.php">Sign up</a>or<a href="Sign-in.php">Sign in</a>
-        <input type="submit" value="Create">
+      <label for="BeerStyle">Style</label><br>
+      <select name="BeerStyle" id="BeerStyle">
+         <option value="Lager">Lager / Pils (IBU 8 to 12)</option>
+         <option value="Porter">Porter (IBU 20 to 40)</option>
+         <option value="Stout">Stout (IBU 30 to 50)</option>
+         <option value="PA">Pale Ale / English Bitter (IBU 30 to 40)</option>
+         <option value="IPA">IPA (IBU 40 to 60)</option>
+         <option value="DoubleIPA">Double IPA / Imperial IPA (IBU 60 to 100)</option>
+         <option value="Barleywine">Barleywine (IBU 80 to 100)</option>
+      </select><br><br>
+
+      <label for="BeerIBU">IBU</label><br>
+      <input type="number" name="BeerIBU" id="BeerIBU"><br><br>
+      <input type="submit" value="Create" name="create">
     </form>
 
-    <?php
-
-        /* $db = new PDO("mysql:host=localhost;dbname=beeradvisor.sql;charset=utf8", "root", "");
-        $req = $db->prepare("INSERT INTO beer (Name, Alcohol, IBU, Aroma, Clarity, Style) VALUES ("Beer1", 784, 20, "Grass", "Straw", "IBU");
- */
-        echo "bonjour"; 
-    ?>
-    
 </body>
 </html>
