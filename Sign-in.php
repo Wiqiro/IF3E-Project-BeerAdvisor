@@ -1,22 +1,21 @@
 <?php
 require_once("connection.php");
+require_once("session.php");
 global $bdd;
 if(isset($_POST['confirm'])){
-
-
 $email = htmlspecialchars($_POST['email']);
 $password = htmlspecialchars($_POST['password']);
-
 $query = "SELECT * FROM user WHERE Username = ?";
 $request = $bdd->prepare($query);
 $request->execute(array($email));
 $res = $request->fetch(PDO::FETCH_ASSOC);
-var_dump($password);
-var_dump($email);
+
 if($res){
     $passwordHash = $res['prenom'];
      if(password_verify($password, $passwordHash)){
          echo "Connection réussie";
+         session_start();
+         $_SESSION['id'] = $res['id'];
      }else{echo "Erreur de connection";};
      header("Location:index.php");
 }}
