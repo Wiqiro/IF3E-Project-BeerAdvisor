@@ -2,15 +2,15 @@
 require_once("connection.php");
 global $bdd;
 session_start();
-$id = $_SESSION;
+$id = $_SESSION['id'];
 
-if(isset($_SESSION)){
+if(isset($_SESSION['id'])){
     $query = "SELECT * FROM user WHERE id = ?";
     $req = $bdd->prepare($query);
     $req->execute(array($id));
     $res = $req->fetch(PDO::FETCH_ASSOC);
 }
-?>
+
 
 <html lang ="fr">
 <head>

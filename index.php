@@ -1,8 +1,3 @@
-<?php
-
-?>
-
-
 <html lang ="en">
 <head>
     <meta charset ="UTF-8">
@@ -17,5 +12,7 @@
     <a href="Sign-in.php">Sign in</a><br>
     <a href="Add-beer.php">Add a new beer</a><br>
     <a href="Browse-Beers.php">Browse beers</a><br>
+
+    
 </body>
 </html>
