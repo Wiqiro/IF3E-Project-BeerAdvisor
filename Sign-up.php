@@ -6,12 +6,31 @@ global $bdd;
 if (isset($_POST['confirm'])) {
     $username = htmlspecialchars($_POST['username']);
     $date = date("Y-m-d");
+    $birth_date = $_POST['birthday'];
+    $diff = date_diff(date_create($birth_date), date_create($date));
+    $age = $diff->format('%y');
     $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    if($_POST['password']==$_POST['confirm_password']) {
-        $query = "INSERT INTO user (Username,Password,Creation_date) VALUES (?,?,?)";
-        $request = $bdd->prepare($query);
-        $request->execute(array($username, $passwordHash, $date));
-        header("Location:Sign-in.php");
+    if ($age >= 18) {
+        if (strlen($username) <= 20) {
+            $req_username = $bdd->prepare("SELECT * FROM user WHERE username = ?");
+            $req_username->execute(array($username));
+            $username_exist = $req_username->rowCount();
+            if ($username_exist == 0) {
+                if ($_POST['password'] == $_POST['confirm_password']) {
+                    $request = $bdd->prepare("INSERT INTO user (Username,Password,Creation_date) VALUES (?,?,?)");
+                    $request->execute(array($username, $passwordHash, $date));
+                    header("Location:Sign-in.php");
+                } else {
+                    $error = "Password doesn't match";
+                }
+            }else {
+                $error = "username already tooken";
+            }
+        } else {
+            $error = "Username might be less than 20 char";
+        }
+    } else {
+        $error = "You need to be older than 18 years old";
     }
 } ?>
 
@@ -29,7 +48,6 @@ if (isset($_POST['confirm'])) {
 <body class="body_sign_up">
 <a href="index.php"><img src="BeerAdvisor.png"></a>
 <form name="formulaire" action="" method="post">
-
     <div class="container">
         <h1>Sign up</h1>
         <hr>
@@ -51,7 +69,7 @@ if (isset($_POST['confirm'])) {
                 <td>
                     <label for="confirm_password"></label>
                     <input type="password" name="confirm_password" id="confirm_password"
-                            placeholder="Confirm password">
+                           placeholder="Confirm password">
                 </td>
             </tr>
         </table>
@@ -59,12 +77,9 @@ if (isset($_POST['confirm'])) {
         <input type="submit" class="registerbtn" value="Sign-up" name="confirm">
         <div>
             <?php
-            if(isset($_POST['confirm'])){
-                if($_POST['password']!=$_POST['confirm_password']){
-                    echo "Passwords doesn't match";
-                }
+            if (isset($error)) {
+                echo $error;
             }
-
             ?>
         </div>
         </table>
