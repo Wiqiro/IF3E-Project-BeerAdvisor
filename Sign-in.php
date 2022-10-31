@@ -1,6 +1,6 @@
 <?php
+session_start();
 require_once("connection.php");
-require_once("session.php");
 global $bdd;
 if(isset($_POST['confirm'])) {
     $username = htmlspecialchars($_POST['username']);
@@ -13,10 +13,11 @@ if(isset($_POST['confirm'])) {
                 $passwordHash = $res['Password'];
                 if(password_verify($password, $passwordHash)){
                     echo "Connection réussie";
-                    session_start();
-                    $_SESSION = $res;
-                    header("Location:index.php");
-                }else{$error = "Wrong password";};
+                    $_SESSION['ID'] = $res['ID'];
+                    $_SESSION['Username'] = $res['Username'];
+
+                    header("Location:profile.php");
+                }else{$error = "Wrong password";}
             }else{$error = "Wrong username";}
 }
 ?>

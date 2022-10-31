@@ -1,15 +1,12 @@
 <?php
+session_start();
 require_once("connection.php");
 global $bdd;
-session_start();
-$id = $_SESSION;
 
-if(isset($_SESSION)){
-    $query = "SELECT * FROM user WHERE id = ?";
-    $req = $bdd->prepare($query);
-    $req->execute(array($id));
-    $res = $req->fetch(PDO::FETCH_ASSOC);
-}
+$id = $_SESSION['ID'];
+$username = $_SESSION['Username'];
+
+
 ?>
 
 <html lang ="fr">
@@ -22,8 +19,10 @@ if(isset($_SESSION)){
 <link rel="stylesheet" href="page.css">
 </head>
 <body>
-<div class="profile"><img src="user_icon.png" class="image_icon" alt="icon">Name<br>Bio</div>
 
+<div>c'est le profil de <?php
+    echo $username;
+    ?> </div>
 
 
 
