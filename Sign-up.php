@@ -43,7 +43,7 @@ if (isset($_POST['confirm'])) {
     <meta name="author" content="Quentin,Eloi,William">
     <meta name="description" content="Page to connect or subscribe">
     <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="page.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="body_sign_up">
 <a href="index.php"><img src="BeerAdvisor.png"></a>

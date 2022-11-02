@@ -24,7 +24,7 @@ if (isset($_POST['create'])) {
 	 <meta name = "author" content="Quentin,Eloi,William">
 	 <meta name ="description" content="This is a page about beer">
 	 <link rel="shortcut icon" href="" type="image/x-icon">
-	 <link rel="stylesheet" href="page.css">
+	 <link rel="stylesheet" href="style.css">
 	 <title>Beer advisor</title>
 </head>
 <body>

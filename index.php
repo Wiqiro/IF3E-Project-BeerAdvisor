@@ -9,7 +9,7 @@
     <meta name = "author" content="Quentin,Eloi,William">
     <meta name ="description" content="This is a page about beer">
     <link rel="shortcut icon" href="" type="image/x-icon">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="style.css">
     <title>Beer advisor</title>
 </head>
 <body>
@@ -17,6 +17,6 @@
     <a href="Sign-in.php">Sign in</a><br>
     <a href="Add-beer.php">Add a new beer</a><br>
     <a href="Browse-Beers.php">Browse beers</a><br>
-<a href="profile.php">profile</a>
+    <a href="profile.php">Profile</a>
 </body>
 </html>
