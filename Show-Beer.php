@@ -1,10 +1,10 @@
 <?php
-
+session_start();
 require_once("connection.php");
 global $bdd;
+$id = $_SESSION['ID'];
 
-
-
+if(isset($id)){
 if (isset($_GET['id'])) {
    $beer_id = $_GET['id'];
 
@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
    
       $query = "INSERT INTO comment(User_ID, beer_id, text, grade, date) VALUES(?,?,?,?,?)";
       $request = $bdd->prepare($query);
-      $request->execute(array(1, $beer_id, $text, $grade, $date));
+      $request->execute(array($id, $beer_id, $text, $grade, $date));
    }
    
    $query = "SELECT * from beer WHERE ID = ?";
@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
    $request = $bdd->prepare($query);
    $request->execute(array($beer_id));
    $com_data = $request->fetch();
-}
+}}else{$erreur = "You might be connected";}
 
 ?>
 
@@ -42,7 +42,7 @@ if (isset($_GET['id'])) {
 	</head>
 	<body>
 		<?php
-      echo 'Bière: ' . $beer_data['Name'] . '<br><br>';
+          echo 'Bière: ' . $beer_data['Name'] . '<br><br>';
       ?>
 
    <form action="" method="post">
