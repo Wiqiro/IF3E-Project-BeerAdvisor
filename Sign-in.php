@@ -15,8 +15,7 @@ if(isset($_POST['confirm'])) {
                     echo "Connection réussie";
                     $_SESSION['ID'] = $res['ID'];
                     $_SESSION['Username'] = $res['Username'];
-
-                    header("Location:profile.php");
+                    header("Location:profile.php?id=".$_SESSION['ID']);
                 }else{$error = "Wrong password";}
             }else{$error = "Wrong username";}
 }
@@ -57,7 +56,6 @@ if(isset($_POST['confirm'])) {
             echo $error;
         }
         ?>
-
 			<input class="registerbtn" type="submit" name="confirm" value="Sign in">
         <hr>
         <p class="container">Not register yet ?  <a href="Sign-up.php">Sign up</p>
