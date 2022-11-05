@@ -7,7 +7,6 @@
 
 
 div {
-    /* font: 30px "sans-serif"; */
     display: inline-block;
 }
 
@@ -59,7 +58,6 @@ input[type=date]{
 .sign_in{
     padding: 10px;
     background-color: grey;
-    /* font : 0.8em kable; */
 }
 a:link{
     color: black;
@@ -89,7 +87,7 @@ a:visited{
 
 .title {
     text-align: start;
-    /* font : 2em "Cooper Black"; */
+
 }
 
 .BeerContainer {
@@ -107,3 +105,20 @@ a:visited{
     flex-wrap: wrap;
 }
 
+.CommentContainer {
+    width: max-content;
+}
+
+
+.Comment {
+    margin: 10px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 12px;
+    padding: 10px;
+
+    display: block;
+    width: 80%;
+    
+    word-wrap: break-word;
+}

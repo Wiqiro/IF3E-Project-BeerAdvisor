@@ -33,13 +33,13 @@ if (isset($_POST['create'])) {
 
 	 <form action="" method="post">
 		<label for="BeerName">Name of the beer</label><br>
-		<input type="text" name="BeerName" id="BeerName"><br><br>
+		<input type="text" name="BeerName" id="BeerName" required><br><br>
 
 		<label for="BeerAlcohol">Alcohol level</label><br>
-		<input type="number" name="BeerAlcohol" id="BeerAlcohol"><br><br>
+		<input type="number" name="BeerAlcohol" id="BeerAlcohol" required><br><br>
 
 		<label for="BeerColor">Color</label><br>
-		<select name="BeerColor" id="BeerColor">
+		<select name="BeerColor" id="BeerColor" required>
 				<option value="PaleStraw">Pale straw</option>
 				<option value="Straw">Straw</option>
 				<option value="PaleGold">Pale gold</option>
@@ -55,7 +55,8 @@ if (isset($_POST['create'])) {
 		</select><br><br>
 
 		<label for="BeerStyle">Style</label><br>
-		<select name="BeerStyle" id="BeerStyle">
+		<select name="BeerStyle" id="BeerStyle" required>
+			<option></option>
 			<option value="Lager">Lager / Pils (IBU 8 to 12)</option>
 			<option value="Porter">Porter (IBU 20 to 40)</option>
 			<option value="Stout">Stout (IBU 30 to 50)</option>
@@ -66,7 +67,7 @@ if (isset($_POST['create'])) {
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU" id="BeerIBU"><br><br>
+		<input type="number" name="BeerIBU" id="BeerIBU" required><br><br>
 		<input type="submit" value="Create" name="create">
 	 </form>
 

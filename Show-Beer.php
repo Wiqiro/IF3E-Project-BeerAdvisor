@@ -23,7 +23,8 @@ if (isset($_GET['id'])) {
 		}
 	}
 		
-	$query = "SELECT * from beer WHERE ID = ?";
+	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Aroma, Style, Color, Last_modified, AVG(C.grade) AS Grade FROM beer B LEFT JOIN comment C ON B.id = C.beer_id WHERE B.id = ?";
+
 	$request = $bdd->prepare($query);
 	$request->execute(array($beer_id));
 	$beer_data = $request->fetch();
@@ -47,34 +48,43 @@ if (isset($_GET['id'])) {
 	</head>
 	<body>
 		<?php
-          echo 'Bière: ' . $beer_data['Name'] . '<br><br>';
+          	echo '<h1>' . $beer_data['Name'] . '</h1><br>';
       	?>
 
-   <form action="" method="post">
+	<form action="" method="post">
 		<label for="BeerName">Add Comment</label><br>
-		<input type="text" name="text" id="text">
+		<textarea size="300"  name="text" id="text" required minlength="20" maxlength="300"></textarea><br>
 
 		<label for="grade">Grade</label>
-		<select name="grade" id="grade">
-				<option value=1>1</option>
-				<option value=2>2</option>
-				<option value=3>3</option>
-				<option value=4>4</option>
-				<option value=5>5</option>
+		<select name="grade" id="grade" required>
+			<option></option>
+			<option value=1>1</option>
+			<option value=2>2</option>
+			<option value=3>3</option>
+			<option value=4>4</option>
+			<option value=5>5</option>
 		</select><br><br>
 		<input type="submit" value="Add" name="create">
 
-	 </form>
+	</form>
 
-      
-      <?php
+	<div class="CommentContainer">
+    <?php
 		while ($com_data != null) {
-			echo '<div> Commentaire:' . $com_data['Text'] . '
-			</div><br>'	;
+			echo '
+			<div class="Comment">
+				<table><tr>
+					<th style="font-size: larger">' . $com_data['Username'] . '<th>
+					<td style="font-size: smaller">  on ' . $com_data['Date'] . '</td>
+					<td style="font-size: smaller"> rated this beer ' . $com_data['Grade'] . ' stars</td>
+				</tr></table>
+				' . $com_data['Text'] . '
+			</div>'	;
 
 			$com_data = $request->fetch();
 		}
 		?>
+	</div>
 		
 	</body>
 </html>
