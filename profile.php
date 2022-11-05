@@ -4,10 +4,22 @@ require_once("connection.php");
 global $bdd;
 
 $id = $_SESSION['ID'];
-$username = $_SESSION['Username'];
+
+if(isset($_GET['id']) AND $_GET['id'] > 0){
+    $getid = intval($_GET['id']);
+    $req_profile = $bdd->prepare("SELECT * FROM user WHERE id = ?");
+    $req_profile->execute(array($_GET['id']));
+    $res = $req_profile->fetch();
+    $username = $res['Username'];
+    $date = $res['Creation_date'];
+    if($id == $getid){
+?> <a href="Edit-profile.txt">Edit profile</a>
+    <?php
+    }
+}
+    ?>
 
 
-?>
 
 <html lang ="fr">
     <head>
@@ -19,10 +31,10 @@ $username = $_SESSION['Username'];
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-
         <div>c'est le profil de <?php
             echo $username;
-            ?> 
+            echo $date;
+            ?>
         </div>
 
     </body>
