@@ -26,6 +26,7 @@ if(isset($_POST['confirm'])){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
     <form action="" method="post">
         <div class="container">
             <hr>

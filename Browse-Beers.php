@@ -48,7 +48,7 @@ if (isset($_GET['SortBy'])) {
 	$query = $query . "Last_modified DESC";
 }
 
-echo $query;
+
 $request = $bdd->prepare($query);
 $request->execute();
 $data = $request->fetch();
@@ -65,9 +65,8 @@ $data = $request->fetch();
 		<title>Beer advisor</title>
 	</head>
 	<body>
-
+    	<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
 		<form action="" method="get">
-
 			<input type="text" name="search" id="search" placeholder="Search a beer"><input type="submit" value="Search">
 
 			<label for="SortBy">Sort by</label>
@@ -80,8 +79,8 @@ $data = $request->fetch();
 				<option value="NameDesc">Name: Z-A</option>
 				<option value="AlcAsc">Alcohol: Low to High</option>
 				<option value="AlcDesc">Alcohol: High to Low</option>
-
 			</select>
+
 			<label for="BeerColor">Color</label>
 			<select name="BeerColor" id="BeerColor">
 				<option></option>
@@ -98,13 +97,12 @@ $data = $request->fetch();
 				<option value="DeepBrown">Deep brown</option>
 				<option value="Black">Black</option>
 			</select>
-			
 		</form>
 
 		<div class="BeerSearchResults">
 			<?php
 			while ($data != null) {
-				echo '<a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer onclick="location.href=`google.com`">
+				echo '<a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
 				<h3><strong>Name: ' . $data['Name'] . '</strong></h3>
 				Last modified: ' . $data['Last_modified'] . '<br>
 				Avg grade: ' . number_format($data['Grade'], 1) . ' / 5<br>

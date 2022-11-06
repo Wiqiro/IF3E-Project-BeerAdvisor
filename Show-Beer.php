@@ -47,44 +47,49 @@ if (isset($_GET['id'])) {
 		<title>Beer advisor</title>
 	</head>
 	<body>
+    	<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+
 		<?php
-          	echo '<h1>' . $beer_data['Name'] . '</h1><br>';
+			echo '<h3><strong>Beer: ' . $beer_data['Name'] . '</strong></h3>
+			Last modified: ' . $beer_data['Last_modified'] . '<br>
+			Avg grade: ' . number_format($beer_data['Grade'], 1) . ' / 5<br>
+			Alc: ' . $beer_data['Alcohol'] . '<br>
+			Style: ' . $beer_data['Style'] . '<br>
+			Color: ' . $beer_data['Color'] . '<br>
+			Aroma: ' . $beer_data['Aroma'] . '<br><br>'	;
       	?>
 
-	<form action="" method="post">
-		<label for="BeerName">Add Comment</label><br>
-		<textarea size="300"  name="text" id="text" required minlength="20" maxlength="300"></textarea><br>
+		<form action="" method="post">
+				<label for="grade">Grade</label>
+				<select name="grade" id="grade" required>
+					<option></option>
+					<option value=1>1 / 5</option>
+					<option value=2>2 / 5</option>
+					<option value=3>3 / 5</option>
+					<option value=4>4 / 5</option>
+					<option value=5>5 / 5</option>	
+				</select><br>
+				<textarea name="text" id="text" required minlength="20" maxlength="300" class="NewComment" placeholder="Add your own review"></textarea><br>
+				<input type="submit" value="Add review" name="create">
 
-		<label for="grade">Grade</label>
-		<select name="grade" id="grade" required>
-			<option></option>
-			<option value=1>1</option>
-			<option value=2>2</option>
-			<option value=3>3</option>
-			<option value=4>4</option>
-			<option value=5>5</option>
-		</select><br><br>
-		<input type="submit" value="Add" name="create">
+		</form>
 
-	</form>
+		<div class="CommentContainer">
+		<?php
+			while ($com_data != null) {
+				echo '
+				<div class="Comment">
+					<table><tr>
+						<th style="font-size: larger">' . $com_data['Username'] . '<th>
+						<td style="font-size: smaller">  on ' . $com_data['Date'] . '</td>
+						<td style="font-size: smaller"> rated this beer ' . $com_data['Grade'] . ' stars</td>
+					</tr></table>
+					' . $com_data['Text'] . '
+				</div>'	;
 
-	<div class="CommentContainer">
-    <?php
-		while ($com_data != null) {
-			echo '
-			<div class="Comment">
-				<table><tr>
-					<th style="font-size: larger">' . $com_data['Username'] . '<th>
-					<td style="font-size: smaller">  on ' . $com_data['Date'] . '</td>
-					<td style="font-size: smaller"> rated this beer ' . $com_data['Grade'] . ' stars</td>
-				</tr></table>
-				' . $com_data['Text'] . '
-			</div>'	;
-
-			$com_data = $request->fetch();
-		}
-		?>
-	</div>
-		
+				$com_data = $request->fetch();
+			}
+			?>
+		</div>
 	</body>
 </html>

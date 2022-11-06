@@ -5,6 +5,9 @@
     height: 100px;
 }
 
+body {
+    margin: 2%;
+}
 
 div {
     display: inline-block;
@@ -106,19 +109,26 @@ a:visited{
 }
 
 .CommentContainer {
-    width: max-content;
+    width: 100%;
 }
 
 
+
+.NewComment {
+    width: 80%;
+    resize: vertical;
+    min-height: 2em;
+}
+
 .Comment {
-    margin: 10px;
-    border-color: black;
-    border-style: solid;
-    border-radius: 12px;
-    padding: 10px;
+    padding-bottom: 50px;
 
     display: block;
     width: 80%;
     
     word-wrap: break-word;
+}
+
+.logo {
+    text-align: center;
 }

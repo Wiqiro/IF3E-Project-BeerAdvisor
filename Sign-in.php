@@ -32,34 +32,34 @@ if(isset($_POST['confirm'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="body">
-<a href="index.php"><img src="BeerAdvisor.png"></a>
-<form action="" method="post">
-    <div class="container">
-        <h1>Sign in</h1>
-        <hr>
-        <table>
-            <tr>
-                <td>
-                    <label for="username"></label>
-                    <input type="text" name="username" id="username" placeholder="Username" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="password"></label>
-                    <input type="password" name="password" id="password" placeholder="Password" required>
-                </td>
-            </tr>
-			</table>
-        <?php
-        if(isset($error)){
-            echo $error;
-        }
-        ?>
-			<input class="registerbtn" type="submit" name="confirm" value="Sign in">
-        <hr>
-        <p class="container">Not register yet ?  <a href="Sign-up.php">Sign up</p>
-    </div>
-</form>
+    <p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+    <form action="" method="post">
+        <div class="container">
+            <h1>Sign in</h1>
+            <hr>
+            <table>
+                <tr>
+                    <td>
+                        <label for="username"></label>
+                        <input type="text" name="username" id="username" placeholder="Username" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password"></label>
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                    </td>
+                </tr>
+                </table>
+            <?php
+            if(isset($error)){
+                echo $error;
+            }
+            ?>
+                <input class="registerbtn" type="submit" name="confirm" value="Sign in">
+            <hr>
+            <p class="container">Not register yet ?  <a href="Sign-up.php">Sign up</p>
+        </div>
+    </form>
 </body>
 </html>

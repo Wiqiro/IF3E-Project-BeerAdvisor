@@ -13,6 +13,7 @@ session_start();
     <title>Beer advisor</title>
 </head>
 <body>
+    <p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
     <a href="Sign-up.php">Sign up</a><br>
     <a href="Sign-in.php">Sign in</a><br>
     <a href="Add-beer.php">Add a new beer</a><br>
