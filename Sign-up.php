@@ -23,7 +23,7 @@ if (isset($_POST['confirm'])) {
                 } else {
                     $error = "Password doesn't match";
                 }
-            }else {
+            } else {
                 $error = "username already tooken";
             }
         } else {
@@ -37,58 +37,58 @@ if (isset($_POST['confirm'])) {
 
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Beer advisor</title>
-        <meta name="author" content="Quentin,Eloi,William">
-        <meta name="description" content="Page to connect or subscribe">
-        <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body class="body_sign_up">
+<head>
+    <meta charset="UTF-8">
+    <title>Beer advisor</title>
+    <meta name="author" content="Quentin,Eloi,William">
+    <meta name="description" content="Page to connect or subscribe">
+    <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="body_sign_up">
 
-        <a href="index.php"><img  src="BeerAdvisor.png" ></a>
+<a href="index.php"><img src="BeerAdvisor.png"></a>
 
-        <form name="formulaire" action="" method="post">
-            <div class="container">
-                <h1>Sign up</h1>
-                <hr>
-                <table>
-                    <td>
-                        <label for="username" class="label_register"></label>
-                        <input type="text" name="username" id="username" placeholder="Username" required>
-                    </td>
-                    <td>
-                        <label for="password"></label>
-                        <input type="password" name="password" id="password" placeholder="Password" required>
-                    </td>
-                    <tr>
-                        <td>
-                            <label for="date"></label>
-                            <input type="date" name="birthday" id="date" value="" required>
+<form name="formulaire" action="" method="post">
+    <div class="container">
+        <h1>Sign up</h1>
+        <hr>
+        <table>
+            <td>
+                <label for="username" class="label_register"></label>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </td>
+            <td>
+                <label for="password"></label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </td>
+            <tr>
+                <td>
+                    <label for="date"></label>
+                    <input type="date" name="birthday" id="date" value="" required>
 
-                        </td>
-                        <td>
-                            <label for="confirm_password"></label>
-                            <input type="password" name="confirm_password" id="confirm_password"
-                                placeholder="Confirm password">
-                        </td>
-                    </tr>
-                </table>
-                <label for="sign-up"></label>
-                <input type="submit" class="registerbtn" value="Sign-up" name="confirm">
-                <div>
-                    <?php
-                    if (isset($error)) {
-                        echo $error;
-                    }
-                    ?>
-                </div>
-                </table>
+                </td>
+                <td>
+                    <label for="confirm_password"></label>
+                    <input type="password" name="confirm_password" id="confirm_password"
+                           placeholder="Confirm password">
+                </td>
+            </tr>
+        </table>
+        <label for="sign-up"></label>
+        <input type="submit" class="registerbtn" value="Sign-up" id="sign-up" name="confirm">
+        <div>
+            <?php
+            if (isset($error)) {
+                echo $error;
+            }
+            ?>
+        </div>
+        </table>
 
-                <hr>
-                <p class="container sign_in">Already an account ? <a class="sign_up" href="Sign-in.php">Sign in</p>
-            </div>
-        </form>
-    </body>
+        <hr>
+        <p class="container sign_in">Already an account ? <a class="sign_up" href="Sign-in.php">Sign in</p>
+    </div>
+</form>
+</body>
 </html>

@@ -130,5 +130,7 @@ a:visited{
 }
 
 .logo {
-    text-align: center;
+    text-align: left;
+    max-height : 200px;
+    max-width : 300px;
 }
