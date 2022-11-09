@@ -1,50 +1,57 @@
-<?php 
+<?php
 session_start();
 require_once("connection.php");
 global $bdd;
-$id = $_SESSION["ID"];
 
-$req = $bdd->prepare("SELECT * FROM user WHERE id = ?");
-$req->execute(array($id));
-$res = $req->fetch();
+$id = $_SESSION['ID'];
+
+if (isset($_GET['id']) and $_GET['id'] > 0){
+$getid = intval($_GET['id']);
+$req_profile = $bdd->prepare("SELECT * FROM user WHERE id = ?");
+$req_profile->execute(array($_GET['id']));
+$res = $req_profile->fetch();
 $username = $res['Username'];
-if(isset($_POST['confirm'])){
-    if(isset($_POST['username'])){
-        $new_username = htmlspecialchars($_POST['username']);
-    }
-}
-
+$date = $res['Creation_date'];
+$bio = $res['Bio'];
 ?>
 
-<html lang="en">
+
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Beer advisor</title>
     <meta name="author" content="Quentin,Eloi,William">
-    <meta name="description" content="Page to connect or subscribe">
+    <meta name="description" content="This is a page about beer">
     <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
-    <form action="" method="post">
-        <div class="container">
-            <hr>
-            <table>
-                <tr>
-                    <td>
-                        <label for="username"></label>
-                        <input type="text" name="username" id="username" placeholder="Username" value="<?php echo $username ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+<div>c'est le profil de <?php
+    echo $username;
+    echo '<br>';
+    echo $date;
+    echo '<br>bio<br>';
+    echo $bio;
+    echo '<br><href="Comment '
+    ?>
+    <br><?php
+    if ($id == $getid) {
+        echo '<a href="Edit-profile.php">Edit profile</a>';
+        echo '<form action="" method="post">
 
-                    </td>
-                </tr>
-            </table>
-            <input class="registerbtn" type="submit" name="confirm" value="Edit profile">
-        </div>
-    </form>
+        <label for="friend">Add friends :</label><br>
+        <input type="text" name="add_friend" id="friend" required>
+        <br>
+        <label for="confirm"></label>
+        <input type="submit" name="confirm" id="confirm">
+    </form>';
+    }
+    }
+    ?>
 
+
+
+</div>
 </body>
+</html>

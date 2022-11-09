@@ -2,22 +2,27 @@
 session_start();
 require_once("connection.php");
 global $bdd;
-if(isset($_POST['confirm'])) {
+if (isset($_POST['confirm'])) {
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $query = "SELECT * FROM user WHERE Username = ?";
     $request = $bdd->prepare($query);
     $request->execute(array($username));
     $res = $request->fetch(PDO::FETCH_ASSOC);
-            if($res){
-                $passwordHash = $res['Password'];
-                if(password_verify($password, $passwordHash)){
-                    echo "Connection réussie";
-                    $_SESSION['ID'] = $res['ID'];
-                    $_SESSION['Username'] = $res['Username'];
-                    header("Location:profile.php?id=".$_SESSION['ID']);
-                }else{$error = "Wrong password";}
-            }else{$error = "Wrong username";}
+    if ($res) {
+        $passwordHash = $res['Password'];
+        if (password_verify($password, $passwordHash)) {
+            echo "Connection réussie";
+            $_SESSION['ID'] = $res['ID'];
+            $_SESSION['Username'] = $res['Username'];
+            $_SESSION['Admin'] = $res['Admin'];
+            header("Location:profile.php?id=" . $_SESSION['ID']);
+        } else {
+            $error = "Wrong password";
+        }
+    } else {
+        $error = "Wrong username";
+    }
 }
 ?>
 
@@ -32,34 +37,34 @@ if(isset($_POST['confirm'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="body">
-    <p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
-    <form action="" method="post">
-        <div class="container">
-            <h1>Sign in</h1>
-            <hr>
-            <table>
-                <tr>
-                    <td>
-                        <label for="username"></label>
-                        <input type="text" name="username" id="username" placeholder="Username" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="password"></label>
-                        <input type="password" name="password" id="password" placeholder="Password" required>
-                    </td>
-                </tr>
-                </table>
-            <?php
-            if(isset($error)){
-                echo $error;
-            }
-            ?>
-                <input class="registerbtn" type="submit" name="confirm" value="Sign in">
-            <hr>
-            <p class="container">Not register yet ?  <a href="Sign-up.php">Sign up</p>
-        </div>
-    </form>
+<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+<form action="" method="post">
+    <div class="container">
+        <h1>Sign in</h1>
+        <hr>
+        <table>
+            <tr>
+                <td>
+                    <label for="username"></label>
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password"></label>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                </td>
+            </tr>
+        </table>
+        <?php
+        if (isset($error)) {
+            echo $error;
+        }
+        ?>
+        <input class="registerbtn" type="submit" name="confirm" value="Sign in">
+        <hr>
+        <p class="container">Not register yet ? <a href="Sign-up.php">Sign up</p>
+    </div>
+</form>
 </body>
 </html>

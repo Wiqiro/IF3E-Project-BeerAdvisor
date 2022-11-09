@@ -18,6 +18,8 @@ session_start();
     <a href="Sign-in.php">Sign in</a><br>
     <a href="Add-beer.php">Add a new beer</a><br>
     <a href="Browse-Beers.php">Browse beers</a><br>
-    <a href="profile.php?id=".$_SESSION['id']>Profile</a>
+    <?php
+    echo '<a href="profile.php?id=">Profile</a>';
+    ?>
 </body>
 </html>
