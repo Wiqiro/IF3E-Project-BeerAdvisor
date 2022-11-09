@@ -11,7 +11,7 @@ if (isset($_POST['create'])) {
 	$style = htmlspecialchars($_POST['BeerStyle']);
 	$date = date("Y-m-d");
 
-	$query = "INSERT INTO beer(name, alcohol, color, style, ibu, last_modified) VALUES(?,?,?,?,?,?)";
+	$query = "INSERT INTO beer(name, alcohol, color_id, style, ibu, last_modified) VALUES(?,?,?,?,?,?)";
 	$request = $bdd->prepare($query);
 	$request->execute(array($name, $alcohol, $color, $style, $ibu, $date));
 	header("Location:index.php");
@@ -41,30 +41,23 @@ if (isset($_POST['create'])) {
 
 		<label for="BeerColor">Color</label><br>
 		<select name="BeerColor" id="BeerColor" required>
-				<option value="PaleStraw">Pale straw</option>
-				<option value="Straw">Straw</option>
-				<option value="PaleGold">Pale gold</option>
-				<option value="DeepGold">Deep gold</option>
-				<option value="PaleAmber">Pale amber</option>
-				<option value="MediumAmber">Medium amber</option>
-				<option value="DeepAmber">Deep Amber</option>
-				<option value="AmberBrown">Amber brown</option>
-				<option value="Brown">Brown</option>
-				<option value="RubyBrown">Ruby brown</option>
-				<option value="DeepBrown">Deep brown</option>
-				<option value="Black">Black</option>
+				<option value="1">Straw</option>
+				<option value="2">Gold</option>
+				<option value="3">Amber</option>
+				<option value="4">Brown</option>
+				<option value="5">Black</option>
 		</select><br><br>
 
 		<label for="BeerStyle">Style</label><br>
 		<select name="BeerStyle" id="BeerStyle" required>
 			<option></option>
-			<option value="Lager">Lager / Pils (IBU 8 to 12)</option>
-			<option value="Porter">Porter (IBU 20 to 40)</option>
-			<option value="Stout">Stout (IBU 30 to 50)</option>
-			<option value="PA">Pale Ale / English Bitter (IBU 30 to 40)</option>
-			<option value="IPA">IPA (IBU 40 to 60)</option>
-			<option value="DoubleIPA">Double IPA / Imperial IPA (IBU 60 to 100)</option>
-			<option value="Barleywine">Barleywine (IBU 80 to 100)</option>
+			<option value="1">Lager / Pils (IBU 8 to 12)</option>
+			<option value="2">Porter (IBU 20 to 40)</option>
+			<option value="3">Stout (IBU 30 to 50)</option>
+			<option value="4">Pale Ale / English Bitter (IBU 30 to 40)</option>
+			<option value="5">IPA (IBU 40 to 60)</option>
+			<option value="5">Double IPA / Imperial IPA (IBU 60 to 100)</option>
+			<option value="5">Barleywine (IBU 80 to 100)</option>
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
