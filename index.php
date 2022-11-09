@@ -19,7 +19,7 @@ session_start();
     <a href="Add-beer.php">Add a new beer</a><br>
     <a href="Browse-Beers.php">Browse beers</a><br>
     <?php
-    echo '<a href="profile.php?id=">Profile</a>';
+    echo '<a href="profile.php?id=' . $_SESSION['ID'] . 'container">profile</a>'
     ?>
 </body>
 </html>

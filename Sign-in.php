@@ -5,18 +5,17 @@ global $bdd;
 if (isset($_POST['confirm'])) {
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
-    $query = "SELECT * FROM user WHERE Username = ?";
-    $request = $bdd->prepare($query);
+    $request = $bdd->prepare("SELECT * FROM user WHERE Username = ?");
     $request->execute(array($username));
     $res = $request->fetch(PDO::FETCH_ASSOC);
+
     if ($res) {
         $passwordHash = $res['Password'];
         if (password_verify($password, $passwordHash)) {
-            echo "Connection réussie";
             $_SESSION['ID'] = $res['ID'];
             $_SESSION['Username'] = $res['Username'];
             $_SESSION['Admin'] = $res['Admin'];
-            header("Location:profile.php?id=" . $_SESSION['ID']);
+            //header("Location:profile.php?id=" . $_SESSION['ID']);
         } else {
             $error = "Wrong password";
         }

@@ -13,6 +13,13 @@ $res = $req_profile->fetch();
 $username = $res['Username'];
 $date = $res['Creation_date'];
 $bio = $res['Bio'];
+$req_friend = $bdd->prepare("SELECT * FROM follows WHERE Followed_ID = ?");
+$req_friend->execute(array($id));
+$result_friend = $req_friend->fetch();
+if ($req_friend->rowCount() < 0) {
+    $follower_id = $result_friend['Follower_ID'];
+    $friend_request = $result_friend['Request'];
+}
 ?>
 
 
@@ -33,23 +40,23 @@ $bio = $res['Bio'];
     echo $date;
     echo '<br>bio<br>';
     echo $bio;
-    echo '<br><href="Comment '
+    echo '<br><href="Comment'
     ?>
     <br><?php
     if ($id == $getid) {
         echo '<a href="Edit-profile.php">Edit profile</a>';
-        echo '<form action="" method="post">
-
-        <label for="friend">Add friends :</label><br>
-        <input type="text" name="add_friend" id="friend" required>
-        <br>
-        <label for="confirm"></label>
-        <input type="submit" name="confirm" id="confirm">
-    </form>';
+    } else if ($follower_id != $getid) {
+        echo '<form method="post">
+<label for="Add_friend">Add Friend</label>
+    <input type="submit" id="Add_friend" name="Add_friend" Value="Add friend">
+</form>';
+    }else if ($friend_request == 0){
+        echo 'en attente';
+    }else {echo 'suivit';
     }
+
     }
     ?>
-
 
 
 </div>
