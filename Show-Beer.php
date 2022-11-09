@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
 	$request->execute(array($beer_id));
 	$beer_data = $request->fetch();
 	
-	$query = "SELECT Username, Text, Grade, Date FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
+	$query = "SELECT User_ID, Username, Text, Grade, Date FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
 	$request = $bdd->prepare($query);
 	$request->execute(array($beer_id));
 	$com_data = $request->fetch();
