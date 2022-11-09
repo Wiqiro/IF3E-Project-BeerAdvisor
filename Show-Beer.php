@@ -7,17 +7,29 @@ global $bdd;
 if (isset($_GET['id'])) {
 	$beer_id = $_GET['id'];
 	
+	
+	
 	if (isset($_POST['create'])) {
 		if (isset($_SESSION['ID'])) {
 			$user_id = $_SESSION['ID'];
-		
+			if (isset($_FILES['image']['tmp_name']) && $_FILES['image']['tmp_name'] != '') {
+				$size = filesize($_FILES['image']['tmp_name']);
+				if ($size < 16000) {
+					$image = file_get_contents($_FILES['image']['tmp_name']);
+				}
+			}
 			$text = $_POST['text'];
 			$grade = htmlspecialchars($_POST['grade']);
 			$date = date("Y-m-d");
-		
-			$query = "INSERT INTO comment(user_ID, beer_id, text, grade, date) VALUES(?,?,?,?,?)";
-			$request = $bdd->prepare($query);
-			$request->execute(array($user_id, $beer_id, $text, $grade, $date));
+			if (!isset($size)) {
+				$query = "INSERT INTO comment(user_ID, beer_id, text, grade, date) VALUES(?,?,?,?,?)";
+				$request = $bdd->prepare($query);
+				$request->execute(array($user_id, $beer_id, $text, $grade, $date));
+			} else if ($size < 16000) {
+				$query = "INSERT INTO comment(user_ID, beer_id, text, grade, date, picture) VALUES(?,?,?,?,?,?)";
+				$request = $bdd->prepare($query);
+				$request->execute(array($user_id, $beer_id, $text, $grade, $date, $image));
+			}
 		} else {
 			echo '<a href="Sign-in.php">You need log in to comment</a>';
 		}
@@ -29,7 +41,7 @@ if (isset($_GET['id'])) {
 	$request->execute(array($beer_id));
 	$beer_data = $request->fetch();
 	
-	$query = "SELECT Username, Text, Grade, Date FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
+	$query = "SELECT User_ID, Username, Text, Grade, Date FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
 	$request = $bdd->prepare($query);
 	$request->execute(array($beer_id));
 	$com_data = $request->fetch();
@@ -59,7 +71,7 @@ if (isset($_GET['id'])) {
 			Aroma: ' . $beer_data['Aroma'] . '<br><br>'	;
       	?>
 
-		<form action="" method="post">
+		<form action="" method="post" enctype="multipart/form-data">
 				<label for="grade">Grade</label>
 				<select name="grade" id="grade" required>
 					<option></option>
@@ -68,10 +80,18 @@ if (isset($_GET['id'])) {
 					<option value=3>3 / 5</option>
 					<option value=4>4 / 5</option>
 					<option value=5>5 / 5</option>	
-				</select><br>
-				<textarea name="text" id="text" required minlength="20" maxlength="300" class="NewComment" placeholder="Add your own review"></textarea><br>
-				<input type="submit" value="Add review" name="create">
+				</select>
 
+				<?php
+				if (isset($size) && $size >= 16000) {
+					echo "The maximum upload size is 16 kb";
+				}
+				?>
+				<br>
+				<textarea name="text" id="text" required minlength="20" maxlength="300" class="NewComment" placeholder="Add your own review"></textarea><br>
+				<input type="file" name="image" accept=".jpg, .jpeg, .png">
+
+				<input type="submit" value="Add review" name="create">
 		</form>
 
 		<div class="CommentContainer">
@@ -80,7 +100,7 @@ if (isset($_GET['id'])) {
 				echo '
 				<div class="Comment">
 					<table><tr>
-						<th style="font-size: larger">' . $com_data['Username'] . '<th>
+						<th style="font-size: larger"><a href="profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
 						<td style="font-size: smaller">  on ' . $com_data['Date'] . '</td>
 						<td style="font-size: smaller"> rated this beer ' . $com_data['Grade'] . ' stars</td>
 					</tr></table>
