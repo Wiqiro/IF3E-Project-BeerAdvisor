@@ -1,27 +1,7 @@
-@import url("https://www.w3schools.com/w3css/4/w3.css");
 
-.image_icon {
-    width: 100px;
-    height: 100px;
-}
-
-body {
-    margin: 2%;
-}
-
-div {
-    display: inline-block;
-}
-
-.body_sign_up {
-    color:black;
-    background-color: white;
+.sign_up{
+    text-align: center;
     justify-content: center;
-}
-
-hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
 }
 
 input[type=text], input[type=password], input[type=email]{
@@ -32,8 +12,9 @@ input[type=text], input[type=password], input[type=email]{
     background: #f1f1f1;
 
 }
+
 input[type=date]{
-    width: 98%;
+    width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
     border: none;
@@ -41,8 +22,18 @@ input[type=date]{
     cursor: pointer;
 }
 
-.registerbtn {
-    background-color: #04AA6D;
+.image img[alt|="logo"]{
+    max-height : 200px;
+    max-width : 300px;
+}
+.stars {
+    font-size: larger;
+    color: rgb(239, 198, 14);
+    user-select: none;
+}
+
+.button input[name^="sign-up"]{
+    background-color: #8e9303;
     color: white;
     padding: 16px 20px;
     margin: 8px 0;
@@ -52,92 +43,12 @@ input[type=date]{
     opacity: 0.9;
 }
 
-
-* {
-    box-sizing: border-box;
-    border-color:grey;
-}
-
-.sign_in{
-    padding: 10px;
-    background-color: grey;
-}
 a:link{
     color: black;
     text-decoration: none;
 }
 a:visited{
     color: black;
-
 }
 
-.container {
-    text-align: center;
-    border-color:white;
-    margin : auto;
-    border-radius: 13px;
-    padding: 15px;
-    background-color: white;
-    justify-content: center;
-
-}
-
-.sign_up {
-    color:blue;
-    text-decoration:underline;
-    text-align: center;
-}
-
-.title {
-    text-align: start;
-
-}
-
-.BeerContainer {
-    margin: 10px;
-    border-color: black;
-    border-style: solid;
-    border-radius: 12px;
-    padding: 10px;
-
-    display: block;    
-}
-
-.BeerSearchResults {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.CommentContainer {
-    width: 100%;
-}
-
-
-
-.NewComment {
-    width: 80%;
-    resize: vertical;
-    min-height: 2em;
-}
-
-.Comment {
-    padding-bottom: 50px;
-
-    display: block;
-    width: 80%;
-    
-    word-wrap: break-word;
-}
-
-.logo {
-    text-align: left;
-    max-height : 200px;
-    max-width : 300px;
-    user-select: none;
-}
-
-.stars {
-    font-size: larger;
-    color: rgb(239, 198, 14);
-    user-select: none;
-}
+.container

@@ -39,7 +39,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
 <div>c'est le profil de <?php
     echo $username;
     echo '<br>';
