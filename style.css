@@ -133,4 +133,11 @@ a:visited{
     text-align: left;
     max-height : 200px;
     max-width : 300px;
+    user-select: none;
+}
+
+.stars {
+    font-size: larger;
+    color: rgb(239, 198, 14);
+    user-select: none;
 }

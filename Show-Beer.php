@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
 			}
 			$text = $_POST['text'];
 			$grade = htmlspecialchars($_POST['grade']);
-			$date = date("Y-m-d");
+			$date = date("Y-m-d H:i:s");
 			if (!isset($size)) {
 				$query = "INSERT INTO comment(user_ID, beer_id, text, grade, date) VALUES(?,?,?,?,?)";
 				$request = $bdd->prepare($query);
@@ -35,13 +35,15 @@ if (isset($_GET['id'])) {
 		}
 	}
 		
-	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Aroma, Style, Color, Last_modified, AVG(C.grade) AS Grade FROM beer B LEFT JOIN comment C ON B.id = C.beer_id WHERE B.id = ?";
-
+	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, Last_modified, AVG(C.grade) AS Grade 
+		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
+		ON B.id = C.Beer_id WHERE B.ID = ?";
 	$request = $bdd->prepare($query);
 	$request->execute(array($beer_id));
 	$beer_data = $request->fetch();
 	
-	$query = "SELECT User_ID, Username, Text, Grade, Date FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
+	$query = "SELECT User_ID, Username, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, C.Picture AS Picture 
+		FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
 	$request = $bdd->prepare($query);
 	$request->execute(array($beer_id));
 	$com_data = $request->fetch();
@@ -57,6 +59,7 @@ if (isset($_GET['id'])) {
 		<link rel="shortcut icon" href="" type="image/x-icon">
 		<link rel="stylesheet" href="style.css">
 		<title>Beer advisor</title>
+		
 	</head>
 	<body>
     	<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
@@ -67,8 +70,7 @@ if (isset($_GET['id'])) {
 			Avg grade: ' . number_format($beer_data['Grade'], 1) . ' / 5<br>
 			Alc: ' . $beer_data['Alcohol'] . '<br>
 			Style: ' . $beer_data['Style'] . '<br>
-			Color: ' . $beer_data['Color'] . '<br>
-			Aroma: ' . $beer_data['Aroma'] . '<br><br>'	;
+			Color: ' . $beer_data['Color'] . '<br>'	;
       	?>
 
 		<form action="" method="post" enctype="multipart/form-data">
@@ -101,10 +103,28 @@ if (isset($_GET['id'])) {
 				<div class="Comment">
 					<table><tr>
 						<th style="font-size: larger"><a href="profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
-						<td style="font-size: smaller">  on ' . $com_data['Date'] . '</td>
-						<td style="font-size: smaller"> rated this beer ' . $com_data['Grade'] . ' stars</td>
+						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
+						<td class="stars""><p>';
+						
+						$i = 0;
+						while ($i < $com_data['Grade']) {
+							echo '★';
+							$i++;
+						}
+						while ($i < 5) {
+							echo '☆';
+							$i++;
+						}
+						echo '</p></td>
 					</tr></table>
-					' . $com_data['Text'] . '
+					<table><tr>
+						<td>
+							' . $com_data['Text'] . '
+						</td>
+						<td>
+							<img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
+						</td>
+					</tr></table>
 				</div>'	;
 
 				$com_data = $request->fetch();

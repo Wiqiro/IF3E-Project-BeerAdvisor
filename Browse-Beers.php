@@ -4,13 +4,18 @@ require_once("connection.php");
 global $bdd;
 
 
-$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Aroma, Style, Color, Last_modified, AVG(C.grade) AS Grade FROM beer B LEFT JOIN comment C ON B.id = C.beer_id ";
+$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, Last_modified, AVG(C.grade) AS Grade 
+		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
+		ON B.id = C.Beer_id ";
+
+
 if (isset($_GET['search'])) {
 	$query = $query . "WHERE name LIKE '%" . $_GET['search'] . "%'";
 	
 	if ($_GET['BeerColor'] != '') {
-		$query = $query . " AND color = '" . $_GET['BeerColor'] . "'";
+		$query = $query . " AND B.color_ID = " . $_GET['BeerColor'];
 	}
+	
 }
 $query = $query . " GROUP BY B.id ORDER BY ";
 
@@ -84,18 +89,11 @@ $data = $request->fetch();
 			<label for="BeerColor">Color</label>
 			<select name="BeerColor" id="BeerColor">
 				<option></option>
-				<option value="PaleStraw">Pale straw</option>
-				<option value="Straw">Straw</option>
-				<option value="PaleGold">Pale gold</option>
-				<option value="DeepGold">Deep gold</option>
-				<option value="PaleAmber">Pale amber</option>
-				<option value="MediumAmber">Medium amber</option>
-				<option value="DeepAmber">Deep Amber</option>
-				<option value="AmberBrown">Amber brown</option>
-				<option value="Brown">Brown</option>
-				<option value="RubyBrown">Ruby brown</option>
-				<option value="DeepBrown">Deep brown</option>
-				<option value="Black">Black</option>
+				<option value="1">Straw</option>
+				<option value="2">Gold</option>
+				<option value="3">Amber</option>
+				<option value="4">Brown</option>
+				<option value="5">Black</option>
 			</select>
 		</form>
 
@@ -108,9 +106,7 @@ $data = $request->fetch();
 				Avg grade: ' . number_format($data['Grade'], 1) . ' / 5<br>
 				Alc: ' . $data['Alcohol'] . '<br>
 				Style: ' . $data['Style'] . '<br>
-				Color: ' . $data['Color'] . '<br>
-				Aroma: ' . $data['Aroma'] . '<br>
-				
+				Color: ' . $data['Color'] . '<br>				
 				</a><br><br>'	;
 
 				$data = $request->fetch();
