@@ -13,8 +13,9 @@ if (isset($_GET['search'])) {
 	$query = $query . "WHERE name LIKE '%" . $_GET['search'] . "%'";
 	
 	if ($_GET['BeerColor'] != '') {
-		$query = $query . " AND color = '" . $_GET['BeerColor'] . "'";
+		$query = $query . " AND B.color_ID = " . $_GET['BeerColor'];
 	}
+	
 }
 $query = $query . " GROUP BY B.id ORDER BY ";
 
@@ -88,11 +89,11 @@ $data = $request->fetch();
 			<label for="BeerColor">Color</label>
 			<select name="BeerColor" id="BeerColor">
 				<option></option>
-				<option value="Straw">Straw</option>
-				<option value="PaleGold">Gold</option>
-				<option value="MediumAmber">Amber</option>
-				<option value="Brown">Brown</option>
-				<option value="Black">Black</option>
+				<option value="1">Straw</option>
+				<option value="2">Gold</option>
+				<option value="3">Amber</option>
+				<option value="4">Brown</option>
+				<option value="5">Black</option>
 			</select>
 		</form>
 

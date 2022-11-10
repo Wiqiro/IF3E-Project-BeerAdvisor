@@ -11,7 +11,7 @@ if (isset($_POST['create'])) {
 	$style = htmlspecialchars($_POST['BeerStyle']);
 	$date = date("Y-m-d");
 
-	$query = "INSERT INTO beer(name, alcohol, color_id, style, ibu, last_modified) VALUES(?,?,?,?,?,?)";
+	$query = "INSERT INTO beer(name, alcohol, color_id, style_id, ibu, last_modified) VALUES(?,?,?,?,?,?)";
 	$request = $bdd->prepare($query);
 	$request->execute(array($name, $alcohol, $color, $style, $ibu, $date));
 	header("Location:index.php");
@@ -61,7 +61,7 @@ if (isset($_POST['create'])) {
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU" id="BeerIBU" required><br><br>
+		<input type="number" name="BeerIBU" id="BeerIBU"><br><br>
 		<input type="submit" value="Create" name="create">
 	 </form>
 
