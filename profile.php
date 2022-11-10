@@ -2,24 +2,30 @@
 session_start();
 require_once("connection.php");
 global $bdd;
-
 $id = $_SESSION['ID'];
+if (isset($_GET['id']) and $_GET['id'] > 0) {
+    $profileid = intval($_GET['id']);
+    $req_profile = $bdd->prepare("SELECT * FROM user WHERE id = ?");
+    $req_profile->execute(array($_GET['id']));
+    $res = $req_profile->fetch();
+    $username = $res['Username'];
+    $date = $res['Creation_date'];
+    $bio = $res['Bio'];
+    $req_friend = $bdd->prepare("SELECT COUNT(*) FROM follows WHERE Follower_ID = ? AND Followed_ID = ?");
+    $req_friend->execute(array($id, $profileid));
+    $result_friend = $req_friend->fetch();
+    if(isset($_POST['Add_friend'])){
+        $req_add_friend = $bdd->prepare("INSERT INTO follows (Followed_ID,Follower_ID) VALUES (?,?)");
+        $req_add_friend->execute(array($id,$profileid));
+        $req_add_friend->fetch();
+    }
+    if ($result_friend == 1) {
+        $message = 'Following';
+    }
 
-if (isset($_GET['id']) and $_GET['id'] > 0){
-$getid = intval($_GET['id']);
-$req_profile = $bdd->prepare("SELECT * FROM user WHERE id = ?");
-$req_profile->execute(array($_GET['id']));
-$res = $req_profile->fetch();
-$username = $res['Username'];
-$date = $res['Creation_date'];
-$bio = $res['Bio'];
-$req_friend = $bdd->prepare("SELECT * FROM follows WHERE Followed_ID = ?");
-$req_friend->execute(array($id));
-$result_friend = $req_friend->fetch();
-if ($req_friend->rowCount() < 0) {
-    $follower_id = $result_friend['Follower_ID'];
-    $friend_request = $result_friend['Request'];
 }
+
+
 ?>
 
 
@@ -43,18 +49,15 @@ if ($req_friend->rowCount() < 0) {
     echo '<br><href="Comment'
     ?>
     <br><?php
-    if ($id == $getid) {
+    if ($id == $profileid) {
         echo '<a href="Edit-profile.php">Edit profile</a>';
-    } else if ($follower_id != $getid) {
+    } else if (isset($message)) {
+        echo $message;
+    } else {
         echo '<form method="post">
-<label for="Add_friend">Add Friend</label>
-    <input type="submit" id="Add_friend" name="Add_friend" Value="Add friend">
-</form>';
-    }else if ($friend_request == 0){
-        echo 'en attente';
-    }else {echo 'suivit';
-    }
-
+                    <label for="Add_friend">Add Friend</label>
+                    <input type="submit" id="Add_friend" name="Add_friend" Value="Add friend">
+              </form>';
     }
     ?>
 
