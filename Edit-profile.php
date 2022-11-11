@@ -80,7 +80,7 @@ if(isset($_POST['confirm'])){
                     </td>
                 </tr>
             </table>
-            <input class="registerbtn" type="submit" name="confirm" value="Edit profile">
+            <input class="registerbtn" type="submit" name="confirm" value="Confirm">
         </div>
     </form>
 

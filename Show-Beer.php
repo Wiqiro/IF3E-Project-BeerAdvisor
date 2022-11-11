@@ -35,7 +35,7 @@ if (isset($_GET['id'])) {
 		}
 	}
 		
-	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, Last_modified, AVG(C.grade) AS Grade 
+	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, AVG(C.grade) AS Grade 
 		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
 		ON B.id = C.Beer_id WHERE B.ID = ?";
 	$request = $bdd->prepare($query);
@@ -83,8 +83,25 @@ if (isset($_GET['id'])) {
 
 		<?php
 			echo '<h3><strong>Beer: ' . $beer_data['Name'] . '</strong></h3>
+			Avg grade: ';
+			if ($beer_data['Grade'] != 0) {
+				echo '<a class="stars">';
+				$i = 0;
+				while ($i < round($beer_data['Grade'], 0, PHP_ROUND_HALF_ODD)) {
+					echo '★';
+					$i++;
+				}
+				while ($i < 5) {
+					echo '☆';
+					$i++;
+				}
+				echo '</a> ' . number_format($beer_data['Grade'], 1);
+			} else {
+				echo '?';
+			}
+			
+			echo '<br>
 			Last modified: ' . $beer_data['Last_modified'] . '<br>
-			Avg grade: ' . number_format($beer_data['Grade'], 1) . ' / 5<br>
 			Alc: ' . $beer_data['Alcohol'] . '<br>
 			Style: ' . $beer_data['Style'] . '<br>
 			Color: ' . $beer_data['Color'] . '<br>'	;
