@@ -62,7 +62,17 @@ if (isset($_GET['id'])) {
 		
 	</head>
 	<body>
-		<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div><br>
+		<!-- HEADER -->
+		<div class="header">
+			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+			<div class="header_title">Beer review</div>
+			<div class="header_buttons">
+				<button>Profile</button>
+				<button>Sign-out</button>
+			</div>
+		</div>
+		<hr>
+		<!-- HEADER -->
 
 		<?php
 			echo '<h3><strong>Beer: ' . $beer_data['Name'] . '</strong></h3>
@@ -90,7 +100,7 @@ if (isset($_GET['id'])) {
 				}
 				?>
 				<br>
-				<textarea name="text" id="text" required minlength="20" maxlength="300" class="NewComment" placeholder="Add your own review"></textarea><br>
+				<textarea name="text" id="text" required minlength="20" maxlength="300" class="new_comment" placeholder="Add your own review"></textarea><br>
 				<input type="file" name="image" accept=".jpg, .jpeg, .png">
 
 				<input type="submit" value="Add review" name="create">
@@ -100,7 +110,7 @@ if (isset($_GET['id'])) {
 		<?php
 			while ($com_data != null) {
 				echo '
-				<div class="Comment">
+				<div class="comment">
 					<table><tr>
 						<th style="font-size: larger"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
 						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>

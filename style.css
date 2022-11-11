@@ -10,6 +10,25 @@
     font-size:large;
 }
 
+.header {
+    width: 100%;
+    display: flex;
+    justify-content:space-between;
+}
+
+.header div {
+    width: 33%;
+}
+
+.header_title {
+    text-align: center;
+    font-size: 50;
+    font-weight: 600;
+}
+.header_buttons {
+    text-align: right;
+}
+
 .sign_up{
     text-align: center;
     justify-content: center;
@@ -39,8 +58,8 @@ input[type=date]{
 }
 
 .image img[id|="profile_picture"]{
-    height : 200px;
-    width : 200px;
+    height : 250px;
+    width : 250px;
     object-fit: cover;
 }
 
@@ -69,4 +88,15 @@ a:visited{
     color: black;
 }
 
-.container
+.new_comment {
+    width: 50%;
+    resize: vertical;
+    min-height: 2em;
+}
+
+.comment {
+    padding-bottom: 50px;
+    display: block;
+    width: 80%;
+    word-wrap: break-word;
+}

@@ -27,43 +27,52 @@ if (isset($_POST['confirm'])) {
 
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Beer advisor</title>
-    <meta name="author" content="Quetin,Eloi,Willianm">
-    <meta name="description" content="Page to connect or subscribe">
-    <link rel="shortcut icon" href="" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="body">
-<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-<form action="" method="post">
-    <div class="">
-        Sign in
+    <head>
+        <meta charset="UTF-8">
+        <title>Beer advisor</title>
+        <meta name="author" content="Quetin,Eloi,Willianm">
+        <meta name="description" content="Page to connect or subscribe">
+        <link rel="shortcut icon" href="" type="image/x-icon">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body class="body">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+            <div class="header_title">Sign-in</div>
+            <div class="header_buttons">
+                <button>Profile</button>
+                <button>Sign-out</button>
+            </div>
+        </div>
         <hr>
-        <table class="sign_in">
-            <tr>
-                <td>
-                    <label for="username"></label>
-                    <input type="text" name="username" id="username" placeholder="Username" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="password"></label>
-                    <input type="password" name="password" id="password" placeholder="Password" required>
-                </td>
-            </tr>
-        </table>
-        <?php
-        if (isset($error)) {
-            echo $error;
-        }
-        ?>
-        <input class="button" type="submit" name="confirm" alt="sign in" value="Sign in">
-        <hr>
-        <p class="container">Not register yet ? <a href="Sign-up.php">Sign up</p>
-    </div>
-</form>
-</body>
+        <!-- HEADER -->
+        <form action="" method="post">
+            <div class="">
+
+                <table class="sign_in">
+                    <tr>
+                        <td>
+                            <label for="username"></label>
+                            <input type="text" name="username" id="username" placeholder="Username" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="password"></label>
+                            <input type="password" name="password" id="password" placeholder="Password" required>
+                        </td>
+                    </tr>
+                </table>
+                <?php
+                if (isset($error)) {
+                    echo $error;
+                }
+                ?>
+                <input class="button" type="submit" name="confirm" alt="sign in" value="Sign in">
+                <hr>
+                <p class="container">Not register yet ? <a href="Sign-up.php">Sign up</p>
+            </div>
+        </form>
+    </body>
 </html>

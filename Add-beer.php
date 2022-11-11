@@ -28,19 +28,28 @@ if (isset($_POST['create'])) {
 	 <title>Beer advisor</title>
 </head>
 <body>
-	<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+	<!-- HEADER -->
+	<div class="header">
+		<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+		<div class="header_title">	Browse beers</div>
+		<div class="header_buttons">
+			<button>Profile</button>
+			<button>Sign-out</button>
+		</div>
+	</div>
+	<hr>
+	<!-- HEADER -->
 
-	 <h2>Add a new beer</h2>
 
 	 <form action="" method="post">
 		<label for="BeerName">Name of the beer</label><br>
-		<input type="text" name="BeerName" id="BeerName" required><br><br>
+		<input type="text" name="BeerName" required><br><br>
 
 		<label for="BeerAlcohol">Alcohol level</label><br>
-		<input type="number" name="BeerAlcohol" id="BeerAlcohol" required><br><br>
+		<input type="number" step="0.1" name="BeerAlcohol" required><br><br>
 
 		<label for="BeerColor">Color</label><br>
-		<select name="BeerColor" id="BeerColor" required>
+		<select name="BeerColor" required>
 				<option value="1">Straw</option>
 				<option value="2">Gold</option>
 				<option value="3">Amber</option>
@@ -49,19 +58,19 @@ if (isset($_POST['create'])) {
 		</select><br><br>
 
 		<label for="BeerStyle">Style</label><br>
-		<select name="BeerStyle" id="BeerStyle" required>
+		<select name="BeerStyle" required>
 			<option></option>
-			<option value="1">Lager / Pils (IBU 8 to 12)</option>
-			<option value="2">Porter (IBU 20 to 40)</option>
-			<option value="3">Stout (IBU 30 to 50)</option>
-			<option value="4">Pale Ale / English Bitter (IBU 30 to 40)</option>
-			<option value="5">IPA (IBU 40 to 60)</option>
-			<option value="5">Double IPA / Imperial IPA (IBU 60 to 100)</option>
-			<option value="5">Barleywine (IBU 80 to 100)</option>
+			<option value="1">Lager / Pils</option>
+			<option value="2">Porter</option>
+			<option value="3">Stout</option>
+			<option value="4">Pale Ale / English Bitter</option>
+			<option value="5">IPA</option>
+			<option value="6">Double IPA / Imperial IPA</option>
+			<option value="7">Barleywine</option>
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU" id="BeerIBU"><br><br>
+		<input type="number" name="BeerIBU" ><br><br>
 		<input type="submit" value="Create" name="create">
 	 </form>
 

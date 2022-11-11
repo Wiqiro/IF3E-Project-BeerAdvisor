@@ -41,18 +41,29 @@ if(isset($_POST['confirm'])){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+  <!-- HEADER -->
+  <div class="header">
+        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+        <div class="header_title">Profile</div>
+        <div class="header_buttons">
+            <button>Profile</button>
+            <button>Sign-out</button>
+        </div>
+    </div>
+    <hr>
+    <!-- HEADER -->
     <form action="" method="post" enctype="multipart/form-data">
 
         <div class="container">
-            <hr>
+
             <table>
                 <tr>
                     <td>
-                        <label for="username"></label>
+                        <label for="username">Username:</label>
                         <input type="text" name="username" id="username" placeholder="Username" value="<?php echo $username ?>" required>
-                        <label for="bio"></label>
+                        <label for="bio">Bio:</label>
                         <input type="text" name="bio" id="bio" placeholder="bio" value="<?php echo $bio ?>">
+                        <label for="image">Profile picture:</label>
                         <input type="file" name="image" accept=".jpg, .jpeg, .png">
                         <?php 
                         if (isset($size) && $size >= 1000000) {

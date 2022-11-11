@@ -39,16 +39,26 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div><br>
+        <!-- HEADER -->
+		<div class="header">
+			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+			<div class="header_title">Profile</div>
+			<div class="header_buttons">
+				<button>Profile</button>
+				<button>Sign-out</button>
+			</div>
+		</div>
+		<hr>
+		<!-- HEADER -->
         <div>
             <table><tr>
                 <td>
 					<div class="image" ><?php echo '<img id="profile_picture" src="data:image;base64,' . base64_encode($profile_data["Picture"]) . '" alt=""/>'; ?></div>
                 </td>
                 <td>
-                Profile: <?php
-                echo $username . '<br>
-                Member since: ' . $date . '<br>Bio: <br>' .
+                Username: <?php
+                echo $username . '<br><br>
+                Member since: ' . $date . '<br><br>Bio: <br>' .
                 $bio . '<br>'
                 ?><br>
                 </td>
@@ -56,7 +66,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
             
             <?php
             if ($id == $profileid) {
-                echo '<a href="Edit-profile.php">Edit profile</a>';
+                echo '<u><a href="Edit-profile.php">Edit profile</a></u>';
             } else if (isset($message)) {
                 echo $message;
             } else {

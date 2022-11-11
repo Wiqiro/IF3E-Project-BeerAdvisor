@@ -15,6 +15,9 @@ if (isset($_GET['search'])) {
 	if ($_GET['BeerColor'] != '') {
 		$query = $query . " AND B.color_ID = " . $_GET['BeerColor'];
 	}
+	if ($_GET['BeerStyle'] != '') {
+		$query = $query . " AND B.style_ID = " . $_GET['BeerStyle'];
+	}
 	
 }
 $query = $query . " GROUP BY B.id ORDER BY ";
@@ -70,16 +73,26 @@ $data = $request->fetch();
 		<title>Beer advisor</title>
 	</head>
 	<body>
-    <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+		<!-- HEADER -->
+		<div class="header">
+			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+			<div class="header_title">	Browse beers</div>
+			<div class="header_buttons">
+				<button>Profile</button>
+				<button>Sign-out</button>
+			</div>
+		</div>
+		<hr>
+		<!-- HEADER -->
 		<form action="" method="get">
-			<input type="text" name="search" id="search" placeholder="Search a beer"><input type="submit" value="Search">
+			<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search"><br>
 
 			<label for="SortBy">Sort by</label>
-			<select name="SortBy" id="SortBy">
-				<option value="RatingDesc">Rating: High to low</option>
-				<option value="RatingAsc">Rating: Low to High</option>
+			<select name="SortBy">
 				<option value="DateDesc">Date: New to old</option>
 				<option value="DateAsc">Date: Old to new</option>
+				<option value="RatingDesc">Rating: High to low</option>
+				<option value="RatingAsc">Rating: Low to High</option>
 				<option value="NameAsc">Name: A-Z</option>
 				<option value="NameDesc">Name: Z-A</option>
 				<option value="AlcAsc">Alcohol: Low to High</option>
@@ -87,7 +100,7 @@ $data = $request->fetch();
 			</select>
 
 			<label for="BeerColor">Color</label>
-			<select name="BeerColor" id="BeerColor">
+			<select name="BeerColor">
 				<option></option>
 				<option value="1">Straw</option>
 				<option value="2">Gold</option>
@@ -95,6 +108,19 @@ $data = $request->fetch();
 				<option value="4">Brown</option>
 				<option value="5">Black</option>
 			</select>
+
+			<label for="BeerStyle">Style</label>
+			<select name="BeerStyle">
+				<option></option>
+				<option value="1">Lager / Pils</option>
+				<option value="2">Porter</option>
+				<option value="3">Stout</option>
+				<option value="4">Pale Ale / English Bitter</option>
+				<option value="5">IPA</option>
+				<option value="6">Double IPA / Imperial IPA</option>
+				<option value="7">Barleywine</option>
+			</select>
+
 		</form>
 
 		<div class="BeerSearchResults">
@@ -107,7 +133,7 @@ $data = $request->fetch();
 				Alc: ' . $data['Alcohol'] . '<br>
 				Style: ' . $data['Style'] . '<br>
 				Color: ' . $data['Color'] . '<br>				
-				</a><br><br>'	;
+				</a><br><br>';
 
 				$data = $request->fetch();
 			}?>

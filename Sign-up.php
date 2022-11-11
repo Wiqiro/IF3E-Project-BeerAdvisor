@@ -47,12 +47,21 @@ if (isset($_POST['confirm'])) {
 </head>
 <body>
 
-<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+        <div class="header_title">Sign-up</div>
+        <div class="header_buttons">
+            <button>Profile</button>
+            <button>Sign-out</button>
+        </div>
+    </div>
+    <hr>
+    <!-- HEADER -->
 
 <form name="formulaire" action="" method="post">
     <div class="sign_up">
-        Sign up
-        <hr>
+
         <table>
             <td>
                 <label for="username" class="label_register"></label>
