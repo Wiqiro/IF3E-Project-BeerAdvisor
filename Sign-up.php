@@ -45,13 +45,13 @@ if (isset($_POST['confirm'])) {
     <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="body_sign_up">
+<body>
 
-<a href="index.php"><img src="BeerAdvisor.png"></a>
+<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 
 <form name="formulaire" action="" method="post">
-    <div class="container">
-        <h1>Sign up</h1>
+    <div class="sign_up">
+        Sign up
         <hr>
         <table>
             <td>
@@ -76,7 +76,7 @@ if (isset($_POST['confirm'])) {
             </tr>
         </table>
         <label for="sign-up"></label>
-        <input type="submit" class="registerbtn" value="Sign-up" id="sign-up" name="confirm">
+        <input type="submit" class="bouton" value="Sign-up" id="sign-up" alt="sign up" name="confirm">
         <div>
             <?php
             if (isset($error)) {
@@ -87,7 +87,7 @@ if (isset($_POST['confirm'])) {
         </table>
 
         <hr>
-        <p class="container sign_in">Already an account ? <a class="sign_up" href="Sign-in.php">Sign in</p>
+        <p class="">Already an account ? <a class="sign_up" href="Sign-in.php">Sign in</p>
     </div>
 </form>
 </body>

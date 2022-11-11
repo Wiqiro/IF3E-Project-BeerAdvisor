@@ -41,7 +41,9 @@ if(isset($_POST['confirm'])){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
     <form action="" method="post" enctype="multipart/form-data">
+
         <div class="container">
             <hr>
             <table>

@@ -28,7 +28,7 @@ if (isset($_POST['create'])) {
 	 <title>Beer advisor</title>
 </head>
 <body>
-	<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
 
 	 <h2>Add a new beer</h2>
 

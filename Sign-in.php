@@ -36,12 +36,12 @@ if (isset($_POST['confirm'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="body">
-<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
 <form action="" method="post">
-    <div class="container">
-        <h1>Sign in</h1>
+    <div class="">
+        Sign in
         <hr>
-        <table>
+        <table class="sign_in">
             <tr>
                 <td>
                     <label for="username"></label>
@@ -60,7 +60,7 @@ if (isset($_POST['confirm'])) {
             echo $error;
         }
         ?>
-        <input class="registerbtn" type="submit" name="confirm" value="Sign in">
+        <input class="button" type="submit" name="confirm" alt="sign in" value="Sign in">
         <hr>
         <p class="container">Not register yet ? <a href="Sign-up.php">Sign up</p>
     </div>

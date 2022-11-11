@@ -28,7 +28,6 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 
 ?>
 
-
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -39,7 +38,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
         <div>
             <table><tr>
                 <td>
@@ -66,7 +65,6 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
                     </form>';
             }
             ?>
-
 
         </div>
     </body>
