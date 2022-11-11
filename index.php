@@ -1,9 +1,9 @@
 <?php
-session_start();
+header("Location:Browse-Beers.php");
 ?>
 
 
-<html lang ="en">
+<!-- <html lang ="en">
 <head>
     <meta charset ="UTF-8">
     <meta name = "author" content="Quentin,Eloi,William">
@@ -19,7 +19,7 @@ session_start();
     <a href="Add-beer.php">Add a new beer</a><br>
     <a href="Browse-Beers.php">Browse beers</a><br>
     <?php
-    echo '<a href="Profile.php?id=' . $_SESSION['ID'] . 'container">Profile</a>'
+    /* echo '<a href="Profile.php?id=' . $_SESSION['ID'] . '">Profile</a>' */
     ?>
 </body>
-</html>
+</html> -->

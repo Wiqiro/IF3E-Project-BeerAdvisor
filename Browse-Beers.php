@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once("connection.php");
 global $bdd;
 
@@ -76,16 +76,25 @@ $data = $request->fetch();
 		<!-- HEADER -->
 		<div class="header">
 			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-			<div class="header_title">	Browse beers</div>
+			<div class="header_title">Browse beers</div>
 			<div class="header_buttons">
-				<button>Profile</button>
-				<button>Sign-out</button>
+				<?php
+				if (isset($_SESSION['ID'])) {
+					echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+					<button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+				} else {
+					echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
+					<button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
+				}
+				?>
 			</div>
 		</div>
 		<hr>
 		<!-- HEADER -->
 		<form action="" method="get">
-			<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search"><br>
+			<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search">
+			You can also <u><a href="Add-beer.php">add a beer</a></u>
+			<br>
 
 			<label for="SortBy">Sort by</label>
 			<select name="SortBy">

@@ -46,8 +46,15 @@ if(isset($_POST['confirm'])){
         <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
         <div class="header_title">Profile</div>
         <div class="header_buttons">
-            <button>Profile</button>
-            <button>Sign-out</button>
+        <?php
+        if (isset($_SESSION['ID'])) {
+            echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+            <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+        } else {
+            echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
+            <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
+        }
+        ?>
         </div>
     </div>
     <hr>

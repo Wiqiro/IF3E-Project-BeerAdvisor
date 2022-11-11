@@ -67,8 +67,15 @@ if (isset($_GET['id'])) {
 			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 			<div class="header_title">Beer review</div>
 			<div class="header_buttons">
-				<button>Profile</button>
-				<button>Sign-out</button>
+				<?php
+				if (isset($_SESSION['ID'])) {
+					echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+					<button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+				} else {
+					echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
+					<button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
+				}
+				?>
 			</div>
 		</div>
 		<hr>
@@ -82,8 +89,16 @@ if (isset($_GET['id'])) {
 			Style: ' . $beer_data['Style'] . '<br>
 			Color: ' . $beer_data['Color'] . '<br>'	;
       	?>
-
+		<hr>
 		<form action="" method="post" enctype="multipart/form-data">
+				<h3><strong>Add your review</h3></strong>
+				
+				<?php
+				if (isset($size) && $size >= 1000000) {
+					echo "The maximum upload size is 1 mb";
+				}
+				?>
+				<textarea name="text" id="text" required minlength="20" maxlength="300" class="new_comment" placeholder="Add your own review"></textarea><br>
 				<label for="grade">Grade</label>
 				<select name="grade" id="grade" required>
 					<option></option>
@@ -93,18 +108,11 @@ if (isset($_GET['id'])) {
 					<option value=4>4 / 5</option>
 					<option value=5>5 / 5</option>	
 				</select>
-
-				<?php
-				if (isset($size) && $size >= 1000000) {
-					echo "The maximum upload size is 1 mb";
-				}
-				?>
-				<br>
-				<textarea name="text" id="text" required minlength="20" maxlength="300" class="new_comment" placeholder="Add your own review"></textarea><br>
 				<input type="file" name="image" accept=".jpg, .jpeg, .png">
 
 				<input type="submit" value="Add review" name="create">
 		</form>
+		<hr>
 
 		<div class="CommentContainer">
 		<?php
@@ -134,7 +142,7 @@ if (isset($_GET['id'])) {
 						<td>
 							<img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
 						</td>
-					</tr></table>
+					</tr></table><br>
 				</div>'	;
 
 				$com_data = $request->fetch();
