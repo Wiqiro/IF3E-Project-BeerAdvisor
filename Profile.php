@@ -28,8 +28,8 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     $com_data = null;
     if ($result_friend == 1 || $profileid == $id) {
 
-        $query = "SELECT User_ID, Username, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, C.Picture AS Picture 
-		FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE U.ID = ?";
+        $query = "SELECT User_ID, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, C.Picture AS Picture 
+		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ?";
         $request = $bdd->prepare($query);
         $request->execute(array($profileid));
         $com_data = $request->fetch();
@@ -108,9 +108,9 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 				echo '
 				<div class="comment">
 					<table><tr>
-						<th style="font-size: larger"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
+						<th style="font-size: larger"><a href="Show-Beer.php?id='. $com_data['Beer_ID'] . '">' . $com_data['Name'] . '<th>
 						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
-						<td class="stars""><p>';
+						<td><p class="stars">';
 						
 						$i = 0;
 						while ($i < $com_data['Grade']) {

@@ -42,8 +42,31 @@ if (isset($_GET['id'])) {
 	$request->execute(array($beer_id));
 	$beer_data = $request->fetch();
 	
-	$query = "SELECT User_ID, Username, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, C.Picture AS Picture 
-		FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ?";
+	$query = "SELECT User_ID, Username, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
+		FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ? ORDER BY ";
+	if (isset($_GET['Sort'])) {
+		$sorting = $_GET['SortBy'];
+		switch ($sorting) {
+		case "RatingDesc":
+			$query = $query . "Grade DESC";
+			break;
+		case "RatingAsc":
+			$query = $query . "Grade ASC";
+			break;
+		case "DateDesc":
+			$query = $query . "RawDate DESC";
+			break;
+		case "DateAsc":
+			$query = $query . "RawDate ASC";
+			break;
+		default:
+			break;
+		}
+	} else {
+		$query = $query . "Date DESC";
+	}
+
+
 	$request = $bdd->prepare($query);
 	$request->execute(array($beer_id));
 	$com_data = $request->fetch();
@@ -132,6 +155,20 @@ if (isset($_GET['id'])) {
 		<hr>
 
 		<div class="CommentContainer">
+		<form action="" method="get">
+			<input type="hidden" name="id" value="<?php echo $_GET['id']?>">
+			<h3>Reviews</h3>
+			
+			<label for="SortBy">Sort by</label>
+			<select name="SortBy">
+				<option value="DateDesc">Date: New to old</option>
+				<option value="DateAsc">Date: Old to new</option>
+				<option value="RatingDesc">Rating: High to low</option>
+				<option value="RatingAsc">Rating: Low to High</option>
+			</select>
+
+			<input type="submit" value="Sort" name="Sort">
+		</form>
 		<?php
 			while ($com_data != null) {
 				echo '
@@ -139,7 +176,7 @@ if (isset($_GET['id'])) {
 					<table><tr>
 						<th style="font-size: larger"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
 						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
-						<td class="stars""><p>';
+						<td ><p class="stars">';
 						
 						$i = 0;
 						while ($i < $com_data['Grade']) {
