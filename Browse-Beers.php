@@ -70,7 +70,7 @@ $data = $request->fetch();
 		<title>Beer advisor</title>
 	</head>
 	<body>
-    <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
+    <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 		<form action="" method="get">
 			<input type="text" name="search" id="search" placeholder="Search a beer"><input type="submit" value="Search">
 

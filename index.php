@@ -13,13 +13,13 @@ session_start();
     <title>Beer advisor</title>
 </head>
 <body>
-    <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
+    <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
     <a href="Sign-up.php">Sign up</a><br>
     <a href="Sign-in.php">Sign in</a><br>
     <a href="Add-beer.php">Add a new beer</a><br>
     <a href="Browse-Beers.php">Browse beers</a><br>
     <?php
-    echo '<a href="profile.php?id=' . $_SESSION['ID'] . 'container">profile</a>'
+    echo '<a href="Profile.php?id=' . $_SESSION['ID'] . 'container">Profile</a>'
     ?>
 </body>
 </html>

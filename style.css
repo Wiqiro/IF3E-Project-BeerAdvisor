@@ -1,4 +1,15 @@
 
+@font-face {
+    font-family: JMHTypewriter;
+    src: url('JMH Typewriter.ttf');
+    
+}
+
+* {
+    font-family: JMHTypewriter;
+    font-size:large;
+}
+
 .sign_up{
     text-align: center;
     justify-content: center;
@@ -26,6 +37,13 @@ input[type=date]{
     max-height : 200px;
     max-width : 300px;
 }
+
+.image img[id|="profile_picture"]{
+    height : 200px;
+    width : 200px;
+    object-fit: cover;
+}
+
 .stars {
     font-size: larger;
     color: rgb(239, 198, 14);

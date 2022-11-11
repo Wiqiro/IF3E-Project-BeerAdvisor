@@ -62,7 +62,7 @@ if (isset($_GET['id'])) {
 		
 	</head>
 	<body>
-    	<p class="logo"><a href="index.php"><img src="BeerAdvisor.png"></a></p>
+		<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div><br>
 
 		<?php
 			echo '<h3><strong>Beer: ' . $beer_data['Name'] . '</strong></h3>
@@ -102,7 +102,7 @@ if (isset($_GET['id'])) {
 				echo '
 				<div class="Comment">
 					<table><tr>
-						<th style="font-size: larger"><a href="profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
+						<th style="font-size: larger"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
 						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
 						<td class="stars""><p>';
 						

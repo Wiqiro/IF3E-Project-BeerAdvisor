@@ -11,13 +11,14 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     $username = $profile_data['Username'];
     $date = $profile_data['Creation_date'];
     $bio = $profile_data['Bio'];
+
     $req_friend = $bdd->prepare("SELECT COUNT(*) FROM follows WHERE Follower_ID = ? AND Followed_ID = ?");
     $req_friend->execute(array($id, $profileid));
     $result_friend = $req_friend->fetch();
-    if(isset($_POST['Add_friend'])){
-        $req_add_friend = $bdd->prepare("INSERT INTO follows (Followed_ID,Follower_ID) VALUES (?,?)");
-        $req_add_friend->execute(array($id,$profileid));
-        $req_add_friend->fetch();
+    if(isset($_POST['Add_friend']) && $result_friend == 0){
+        $req_follow = $bdd->prepare("INSERT INTO follows (Followed_ID,Follower_ID) VALUES (?,?)");
+        $req_follow->execute(array($profileid, $id));
+        $req_follow->fetch();
     }
     if ($result_friend == 1) {
         $message = 'Following';
@@ -38,11 +39,11 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
+        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div><br>
         <div>
             <table><tr>
                 <td>
-					<div><?php echo '<img src="data:image;base64,' . base64_encode($profile_data["Picture"]) . '" alt=""/>'; ?></div>
+					<div class="image" ><?php echo '<img id="profile_picture" src="data:image;base64,' . base64_encode($profile_data["Picture"]) . '" alt=""/>'; ?></div>
                 </td>
                 <td>
                 Profile: <?php
@@ -60,8 +61,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
                 echo $message;
             } else {
                 echo '<form method="post">
-                            <label for="Add_friend">Add Friend</label>
-                            <input type="submit" id="Add_friend" name="Add_friend" Value="Add friend">
+                        <input type="submit" id="Add_friend" name="Add_friend" Value="Follow">
                     </form>';
             }
             ?>

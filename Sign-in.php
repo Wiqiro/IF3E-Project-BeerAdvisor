@@ -15,7 +15,7 @@ if (isset($_POST['confirm'])) {
             $_SESSION['ID'] = $res['ID'];
             $_SESSION['Username'] = $res['Username'];
             $_SESSION['Admin'] = $res['Admin'];
-            //header("Location:profile.php?id=" . $_SESSION['ID']);
+            header("Location:Profile.php?id=" . $_SESSION['ID']);
         } else {
             $error = "Wrong password";
         }
@@ -36,7 +36,7 @@ if (isset($_POST['confirm'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="body">
-<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
+<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 <form action="" method="post">
     <div class="">
         Sign in

@@ -21,11 +21,11 @@ if(isset($_POST['confirm'])){
         if (!isset($size)) {
             $new_req = $bdd->prepare("UPDATE user SET Username = ?, Bio = ? WHERE id = ?");
             $new_req->execute(array($new_username,$new_bio,$id));
-            header("Location:profile.php?id=".$_SESSION['ID']);
+            header("Location:Profile.php?id=".$_SESSION['ID']);
         } else if ($size < 1000000) {
             $new_req = $bdd->prepare("UPDATE user SET Username = ?, Bio = ?, Picture = ? WHERE id = ?");
             $new_req->execute(array($new_username, $new_bio, $new_image, $id));
-            header("Location:profile.php?id=".$_SESSION['ID']);
+            header("Location:Profile.php?id=".$_SESSION['ID']);
         }
 }
 
@@ -41,7 +41,7 @@ if(isset($_POST['confirm'])){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a</div>
+  <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
     <form action="" method="post" enctype="multipart/form-data">
 
         <div class="container">
