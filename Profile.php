@@ -163,8 +163,13 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
                                 echo '☆';
                                 $i++;
                             }
-                            echo '</p></td>
-                        </tr></table>
+                            echo '</p></td>';
+                            if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
+                                echo '<td "> - 
+                                    <a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
+                                </td>';
+                            }
+                        echo '</tr></table>
                         <table><tr>
                             <td>
                                 ' . $com_data['Text'] . '

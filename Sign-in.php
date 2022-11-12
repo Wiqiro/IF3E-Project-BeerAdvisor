@@ -41,7 +41,7 @@ if (isset($_POST['confirm'])) {
         <!-- HEADER -->
         <div class="header">
             <div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-            <div class="header_title">Update password</div>
+            <div class="header_title">Sign-in</div>
             <div class="header_buttons">
             <?php
             if (isset($_SESSION['ID'])) {
@@ -78,7 +78,7 @@ if (isset($_POST['confirm'])) {
                 }
                 ?>
                 <input class="button" type="submit" name="confirm" alt="sign in" value="Sign in">
-                <p class="container">Don't remember your password ?<a href="Change.php"> Change it</p>
+                <p class="container">Forgot your password ?<a href="Change.php"> Change it</p>
                 <hr>
                 <p class="container">Not register yet ? <a href="Sign-up.php">Sign up</p>
             </div>

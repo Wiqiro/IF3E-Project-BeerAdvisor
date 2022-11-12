@@ -42,7 +42,7 @@ if (isset($_GET['id'])) {
 	$request->execute(array($beer_id));
 	$beer_data = $request->fetch();
 	
-	$query = "SELECT User_ID, Username, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
+	$query = "SELECT C.ID As ID, User_ID, Username, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
 		FROM user U INNER JOIN comment C ON U.ID = C.User_ID WHERE C.Beer_ID = ? ORDER BY ";
 	if (isset($_GET['Sort'])) {
 		$sorting = $_GET['SortBy'];
@@ -128,6 +128,9 @@ if (isset($_GET['id'])) {
 			Alc: ' . $beer_data['Alcohol'] . '<br>
 			Style: ' . $beer_data['Style'] . '<br>
 			Color: ' . $beer_data['Color'] . '<br>'	;
+			if (isset($_SESSION['Admin'])) {
+				echo '<br><a href="delete-beer.php?id=' . $_GET['id'] . '" onclick="return confirm(`Are you sure you want to delete this beer ?`);"><u>Delete this beer</u></a>';
+			}
       	?>
 		<hr>
 		<form action="" method="post" enctype="multipart/form-data">
@@ -138,7 +141,7 @@ if (isset($_GET['id'])) {
 					echo "The maximum upload size is 1 mb";
 				}
 				?>
-				<textarea name="text" id="text" required minlength="20" maxlength="300" class="new_comment" placeholder="Add your own review"></textarea><br>
+				<textarea name="text" id="text" required minlength="10" maxlength="300" class="new_comment" placeholder="Add your own review"></textarea><br>
 				<label for="grade">Grade</label>
 				<select name="grade" id="grade" required>
 					<option></option>
@@ -177,8 +180,8 @@ if (isset($_GET['id'])) {
 				<div class="comment">
 					<table><tr>
 						<th style="font-size: larger"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
-						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
-						<td ><p class="stars">';
+						<td style="font-size: smaller"> - the ' . $com_data['Date'] . ' - </td>
+						<td><p class="stars">';
 						
 						$i = 0;
 						while ($i < $com_data['Grade']) {
@@ -189,8 +192,13 @@ if (isset($_GET['id'])) {
 							echo '☆';
 							$i++;
 						}
-						echo '</p></td>
-					</tr></table>
+						echo '</p></td>';
+						if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
+							echo '<td "> - 
+								<a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
+							</td>';
+						}
+					echo '</tr></table>
 					<table><tr>
 						<td>
 							' . $com_data['Text'] . '

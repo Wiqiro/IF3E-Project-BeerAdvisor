@@ -38,7 +38,7 @@ if(isset($_POST['confirm'])) {
 <!-- HEADER -->
 <div class="header">
     <div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-    <div class="header_title">Sign-in</div>
+    <div class="header_title">Update password</div>
     <div class="header_buttons">
         <?php
         if (isset($_SESSION['ID'])) {
