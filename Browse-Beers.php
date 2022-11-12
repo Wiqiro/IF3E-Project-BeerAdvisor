@@ -4,7 +4,7 @@ require_once("connection.php");
 global $bdd;
 
 
-$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, AVG(C.grade) AS Grade 
+$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, Last_modified AS RawDate, AVG(C.grade) AS Grade 
 		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
 		ON B.id = C.Beer_id ";
 
@@ -21,6 +21,9 @@ if (isset($_GET['search'])) {
 	if ($_GET['MinAlc'] != '') {
 		$query = $query . " AND B.Alcohol >= " . $_GET['MinAlc'];
 	}
+	if ($_GET['MaxAlc'] != '') {
+		$query = $query . " AND B.Alcohol <= " . $_GET['MaxAlc'];
+	}
 	
 }
 $query = $query . " GROUP BY B.id ORDER BY ";
@@ -35,10 +38,10 @@ if (isset($_GET['SortBy'])) {
 		$query = $query . "Grade ASC";
 		break;
 	case "DateDesc":
-		$query = $query . "Last_modified DESC";
+		$query = $query . "RawDate DESC";
 		break;
 	case "DateAsc":
-		$query = $query . "Last_modified ASC";
+		$query = $query . "RawDate ASC";
 		break;
 	case "NameAsc":
 		$query = $query . "Name ASC";
@@ -56,13 +59,21 @@ if (isset($_GET['SortBy'])) {
 		break;
 	}
 } else {
-	$query = $query . "Last_modified DESC";
+	$query = $query . "RawDate DESC";
 }
-
 
 $request = $bdd->prepare($query);
 $request->execute();
 $data = $request->fetch();
+
+
+$color_req = $bdd->prepare("SELECT * FROM color ORDER BY ID");
+$color_req->execute();
+$color_data = $color_req->fetch();
+
+$style_req = $bdd->prepare("SELECT * FROM style ORDER BY ID");
+$style_req->execute();
+$style_data = $style_req->fetch();
 	
 ?>
 
@@ -82,7 +93,7 @@ $data = $request->fetch();
 			<div class="header_title">Browse beers</div>
 			<div class="header_buttons">
 				<?php
-                if ($_SESSION['ID'] != 0) {
+                if (isset($_SESSION['ID'])) {
                     echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
                 <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
                 } else {
@@ -112,22 +123,22 @@ $data = $request->fetch();
 
 			<select name="BeerColor">
 				<option value="">Any color</option>
-				<option value="1">Straw</option>
-				<option value="2">Gold</option>
-				<option value="3">Amber</option>
-				<option value="4">Brown</option>
-				<option value="5">Black</option>
+				<?php
+				while ($color_data != null) {
+					echo '<option value="' . $color_data['ID'] . '">' . $color_data['Color'] . '</option>';
+					$color_data = $color_req->fetch();
+				}
+				?>
 			</select>
 
 			<select name="BeerStyle">
 				<option value="">Any style</option>
-				<option value="1">Lager / Pils</option>
-				<option value="2">Porter</option>
-				<option value="3">Stout</option>
-				<option value="4">Pale Ale / English Bitter</option>
-				<option value="5">IPA</option>
-				<option value="6">Double IPA / Imperial IPA</option>
-				<option value="7">Barleywine</option>
+				<?php
+				while ($style_data != null) {
+					echo '<option value="' . $style_data['ID'] . '">' . $style_data['Style'] . '</option>';
+					$style_data = $style_req->fetch();
+				}
+				?>
 			</select>
 			
 			<label for="MinAlc">Alc:</label>

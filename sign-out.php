@@ -2,6 +2,7 @@
 session_start();
 require_once("connection.php");
 global $bdd;
-$_SESSION['ID'] = 0;
+unset($_SESSION['ID']);
+unset($_SESSION['Admin']);
 header('location:Browse-Beers.php');
 ?>

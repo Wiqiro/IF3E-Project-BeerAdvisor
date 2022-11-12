@@ -14,7 +14,9 @@ if (isset($_POST['confirm'])) {
         if (password_verify($password, $passwordHash)) {
             $_SESSION['ID'] = $res['ID'];
             $_SESSION['Username'] = $res['Username'];
-            $_SESSION['Admin'] = $res['Admin'];
+            if ($res['Admin'] == 1) {
+                $_SESSION['Admin'] = 1;
+            }
             header("Location:Profile.php?id=" . $_SESSION['ID']);
         } else {
             $error = "Wrong password";
@@ -42,7 +44,7 @@ if (isset($_POST['confirm'])) {
             <div class="header_title">Sign-in</div>
             <div class="header_buttons">
             <?php
-            if ($_SESSION['ID'] != 0) {
+            if (isset($_SESSION['ID'])) {
                 echo '<button id="header" onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
                 <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
             } else {

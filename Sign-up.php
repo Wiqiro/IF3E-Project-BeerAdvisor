@@ -52,7 +52,7 @@ if (isset($_POST['confirm'])) {
         <div class="header_title">Sign-up</div>
         <div class="header_buttons">
         <?php
-        if ($_SESSION['ID'] != 0) {
+        if (isset($_SESSION['ID'])) {
             echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
                 <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
         } else {

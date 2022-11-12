@@ -116,7 +116,8 @@ a:visited{
 .new_comment {
     width: 50%;
     resize: vertical;
-    min-height: 2em;
+    min-height: 5em;
+    max-height: 10em;
 }
 
 .comment {
@@ -125,6 +126,7 @@ a:visited{
     width: 100%;
     word-wrap: break-word;
 }
+
 .BeerSearchResults {
     width: 30%;
     box-sizing: border-box;
@@ -156,7 +158,12 @@ button{
 
 hr{
     color:grey;
+}
 
+.new_bio {
+    resize: vertical;
+    min-height: 5em;
+    max-height: 10em;
 }
 
 .profile{

@@ -34,7 +34,7 @@ if (isset($_POST['create'])) {
 		<div class="header_title">Add a beer</div>
 		<div class="header_buttons">
 			<?php
-			if (isset($_SESSION['ID'])) {
+            if (isset($_SESSION['ID'])) {
 				echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
 				<button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
 			} else {

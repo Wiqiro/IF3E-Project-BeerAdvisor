@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
 				$request->execute(array($user_id, $beer_id, $text, $grade, $date, $image));
 			}
 		} else {
-			echo '<a href="Sign-in.php">You need log in to comment</a>';
+			$login_message = 'You need to <u><a href="Sign-in.php">log in</a></u> to comment';
 		}
 	}
 		
@@ -63,7 +63,7 @@ if (isset($_GET['id'])) {
 			break;
 		}
 	} else {
-		$query = $query . "Date DESC";
+		$query = $query . "RawDate DESC";
 	}
 
 
@@ -150,6 +150,10 @@ if (isset($_GET['id'])) {
 				</select>
 				<input type="file" name="image" accept=".jpg, .jpeg, .png">
 				<input type="submit" value="Add review" name="create">
+				<?php
+			if (isset($login_message)) {
+				echo $login_message;
+			} ?>
 		</form>
 		<hr>
 		<div class="CommentContainer">

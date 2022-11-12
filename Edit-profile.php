@@ -68,7 +68,7 @@ if(isset($_POST['confirm'])){
                         <label for="username">Username :</label>
                         <input type="text" name="username" id="username" placeholder="Username" value="<?php echo $username ?>" required>
                         <label for="bio">Bio :</label>
-                        <input type="text" name="bio" id="bio" placeholder="bio" value="<?php echo $bio ?>">
+                        <textarea name="bio" id="bio" placeholder="Bio" maxlength="300" class="new_bio"><?php echo $bio ?></textarea>
                         <label for="image">Profile picture:</label>
                         <input type="file" name="image" accept=".jpg, .jpeg, .png">
                         <?php 

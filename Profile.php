@@ -28,6 +28,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
         $req_follow = $bdd->prepare("INSERT INTO follows (Followed_ID,Follower_ID) VALUES (?,?)");
         $req_follow->execute(array($profileid, $id));
         $req_follow->fetch();
+        header("Refresh:0");
     }
 
     if ($result_friend == 1) {
@@ -35,12 +36,34 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     }
     $com_data = null;
     if ($result_friend == 1 || $profileid == $id) {
-        $query = "SELECT User_ID, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, C.Picture AS Picture 
-		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ?";
+        $query = "SELECT User_ID, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
+		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ? ORDER BY ";
+
+        if (isset($_GET['Sort'])) {
+            $sorting = $_GET['SortBy'];
+            switch ($sorting) {
+            case "RatingDesc":
+                $query = $query . "Grade DESC";
+                break;
+            case "RatingAsc":
+                $query = $query . "Grade ASC";
+                break;
+            case "DateDesc":
+                $query = $query . "RawDate DESC";
+                break;
+            case "DateAsc":
+                $query = $query . "RawDate ASC";
+                break;
+            default:
+                break;
+            }
+        } else {
+            $query = $query . "RawDate DESC";
+        }
         $request = $bdd->prepare($query);
         $request->execute(array($profileid));
         $com_data = $request->fetch();
-        }
+    }
 ?>
 
 <html lang="en">
@@ -88,8 +111,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
                         <input type="submit" id="Add_friend" name="Add_friend" Value="Follow">
                     </form>';
                 }
-                echo 'Username: ';
-                echo $username . '<br><br>
+                echo 'Username: ' . $username . '<br><br>
                 Member since: ' . $date . '<br><br>Bio: <br>' .
                 $bio;
 
@@ -106,37 +128,56 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
         </div>
         <hr>
         <div class="CommentContainer">
+        <form action="" method="get">
+			<input type="hidden" name="id" value="<?php echo $_GET['id']?>">
+			<h3>Reviews</h3>
+			
+			<label for="SortBy">Sort by</label>
+			<select name="SortBy">
+				<option value="DateDesc">Date: New to old</option>
+				<option value="DateAsc">Date: Old to new</option>
+				<option value="RatingDesc">Rating: High to low</option>
+				<option value="RatingAsc">Rating: Low to High</option>
+			</select>
+
+			<input type="submit" value="Sort" name="Sort">
+		</form>
 		<?php
             if(isset($com_data)){
-			while ($com_data != null) {
-				echo '
-				<div class="comment">
-					<table><tr>
-						<th style="font-size: larger"><a href="Show-Beer.php?id='. $com_data['Beer_ID'] . '">' . $com_data['Name'] . '<th>
-						<td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
-						<td><p class="stars">';
-						$i = 0;
-						while ($i < $com_data['Grade']) {
-							echo '★';
-							$i++;
-						}
-						while ($i < 5) {
-							echo '☆';
-							$i++;
-						}
-						echo '</p></td>
-					</tr></table>
-					<table><tr>
-						<td>
-							' . $com_data['Text'] . '
-						</td>
-						<td>
-							<img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
-						</td>
-					</tr></table><br>
-				</div>'	;
-				$com_data = $request->fetch();
-			}}else if($_GET['id'] != 0){echo "This profile don't have any comment";}
+                while ($com_data != null) {
+                    echo '
+                    <div class="comment">
+                        <table><tr>
+                            <th style="font-size: larger"> <a href="Show-Beer.php?id='. $com_data['Beer_ID'] . '">' . $com_data['Name'] . '<th>
+                            <td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
+                            <td><p class="stars">';
+                            $i = 0;
+                            while ($i < $com_data['Grade']) {
+                                echo '★';
+                                $i++;
+                            }
+                            while ($i < 5) {
+                                echo '☆';
+                                $i++;
+                            }
+                            echo '</p></td>
+                        </tr></table>
+                        <table><tr>
+                            <td>
+                                ' . $com_data['Text'] . '
+                            </td>
+                            <td>
+                                <img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
+                            </td>
+                        </tr></table><br>
+                    </div>'	;
+                    $com_data = $request->fetch();
+                }
+            } else if ($_GET['id'] != 0 && $result_friend == 1){
+                echo "This profile don't have any comment";
+            } else {
+                echo "You need to follow " . $username . " to see their reviews";
+            }
         }
 			?>
 		</div>
