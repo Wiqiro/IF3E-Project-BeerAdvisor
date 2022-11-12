@@ -61,7 +61,7 @@ if(isset($_POST['confirm'])){
     <hr>
     <!-- HEADER -->
     <form action="" method="post" enctype="multipart/form-data">
-        <div id="center">
+        <div class="sign">
             <table>
                 <tr>
                     <td>
