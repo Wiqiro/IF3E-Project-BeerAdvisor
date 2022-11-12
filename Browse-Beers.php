@@ -144,10 +144,7 @@ $style_data = $style_req->fetch();
 			<label for="MinAlc">Alc:</label>
 			<input type="number" name="MinAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Min">
 			<input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
-			
-
 		</form>
-
 		<div >
 			<?php
 			while ($data != null) {

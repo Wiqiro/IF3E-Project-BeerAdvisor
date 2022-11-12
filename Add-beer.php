@@ -48,24 +48,30 @@ if (isset($_POST['create'])) {
 	<!-- HEADER -->
 
 
-	 <form action="" method="post">
+	 <form action="" method="post" enctype="multipart/form-data">
 		<label for="BeerName">Name of the beer</label><br>
-		<input type="text" name="BeerName" required><br><br>
+         <label>
+             <input type="text" name="BeerName" required>
+         </label><br><br>
 
 		<label for="BeerAlcohol">Alcohol level</label><br>
-		<input type="number" step="0.1" min="0" max="67.5" name="BeerAlcohol" required><br><br>
+         <label>
+             <input type="number" step="0.1" min="0" max="67.5" name="BeerAlcohol" required>
+         </label><br><br>
 
 		<label for="BeerColor">Color</label><br>
-		<select name="BeerColor" required>
-				<option value="1">Straw</option>
-				<option value="2">Gold</option>
-				<option value="3">Amber</option>
-				<option value="4">Brown</option>
-				<option value="5">Black</option>
-		</select><br><br>
+         <label>
+             <select name="BeerColor" required>
+                     <option value="1">Straw</option>
+                     <option value="2">Gold</option>
+                     <option value="3">Amber</option>
+                     <option value="4">Brown</option>
+                     <option value="5">Black</option>
+             </select>
+         </label><br><br>
 
 		<label for="BeerStyle">Style</label><br>
-		<select name="BeerStyle" id="Style" required>
+         <label for="Style"></label><select name="BeerStyle" id="Style" required>
 			<option></option>
 			<option value="1">Lager / Pils</option>
 			<option value="2">Porter</option>
@@ -77,8 +83,14 @@ if (isset($_POST['create'])) {
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU" ><br><br>
-		<input type="submit" value="Create" name="create">
+         <label>
+             <input type="number" name="BeerIBU" >
+         </label><br><br>
+         <input type="file" name="image" accept=".jpg, .jpeg, .png">
+         <br>
+
+         <input type="submit" value="Create" name="create">
+
 	 </form>
 
 </body>

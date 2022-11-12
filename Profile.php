@@ -2,7 +2,9 @@
 session_start();
 require_once("connection.php");
 global $bdd;
-$id = $_SESSION['ID'];
+if(isset($_SESSION['ID'])){
+    $id = $_SESSION['ID'];
+}else{$id = 0;}
 
 if (isset($_GET['id']) and $_GET['id'] > 0) {
     $profileid = intval($_GET['id']);
@@ -18,13 +20,13 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     $req_friend = $bdd->prepare("SELECT * FROM follows WHERE Follower_ID = ? AND Followed_ID = ?");
     $req_friend->execute(array($id, $profileid));
     $result_friend = $req_friend->rowCount();
-    if(isset($_POST['Add_friend']) && $result_friend == 0 && $id!=$profileid) {
+    if(isset($_POST['Add_friend']) && $result_friend == 0 && $id!=$profileid && $id!=0) {
         $req_friend = $bdd->prepare("SELECT COUNT(*) AS count FROM follows WHERE Follower_ID = ? AND Followed_ID = ?");
         $req_friend->execute(array($id, $profileid));
         $result_friend = $req_friend->fetch()['count'];
     }
 
-    if(isset($_POST['Add_friend']) && $result_friend == 0){
+    if(isset($_POST['Add_friend']) && $result_friend == 0 && $id!=0){
         $req_follow = $bdd->prepare("INSERT INTO follows (Followed_ID,Follower_ID) VALUES (?,?)");
         $req_follow->execute(array($profileid, $id));
         $req_follow->fetch();
@@ -82,7 +84,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 			<div class="header_title">Profile</div>
 			<div class="header_buttons">
             <?php
-            if ($_SESSION != 0) {
+            if (isset($_SESSION['ID'])) {
                 echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
                 <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
             } else {
@@ -103,10 +105,10 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
                 <td>
 
                 <?php
-                if ($result_friend != 0 && $id!=$profileid) {
-                    echo '<div>Following</div> <br>';
+                if ($result_friend != 0 && $id!=$profileid && $id!=0) {
+                    echo '<div>Following</div><br>';
                 }
-                if($result_friend == 0 && $id!=$profileid){
+                if($result_friend == 0 && $id!=$profileid && $id!=0){
                     echo '<form method="post">
                         <input type="submit" id="Add_friend" name="Add_friend" Value="Follow">
                     </form>';
