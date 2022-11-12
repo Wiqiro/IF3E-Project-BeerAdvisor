@@ -79,8 +79,10 @@ if(isset($_POST['confirm'])){
                     </td>
                 </tr>
             </table>
+
             <br>
             <input class="" type="submit" name="confirm" value="Edit profile">
+
         </div>
     </form>
 

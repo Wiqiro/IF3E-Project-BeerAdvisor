@@ -4,7 +4,7 @@ require_once("connection.php");
 global $bdd;
 
 
-$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, Last_modified, AVG(C.grade) AS Grade 
+$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, AVG(C.grade) AS Grade 
 		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
 		ON B.id = C.Beer_id ";
 
@@ -13,10 +13,13 @@ if (isset($_GET['search'])) {
 	$query = $query . "WHERE name LIKE '%" . $_GET['search'] . "%'";
 	
 	if ($_GET['BeerColor'] != '') {
-		$query = $query . " AND B.color_ID = " . $_GET['BeerColor'];
+		$query = $query . " AND B.Color_ID = " . $_GET['BeerColor'];
 	}
 	if ($_GET['BeerStyle'] != '') {
-		$query = $query . " AND B.style_ID = " . $_GET['BeerStyle'];
+		$query = $query . " AND B.Style_ID = " . $_GET['BeerStyle'];
+	}
+	if ($_GET['MinAlc'] != '') {
+		$query = $query . " AND B.Alcohol >= " . $_GET['MinAlc'];
 	}
 	
 }
@@ -107,9 +110,8 @@ $data = $request->fetch();
 				<option value="AlcDesc">Alcohol: High to Low</option>
 			</select>
 
-			<label for="BeerColor">Color</label>
 			<select name="BeerColor">
-				<option></option>
+				<option value="">Any color</option>
 				<option value="1">Straw</option>
 				<option value="2">Gold</option>
 				<option value="3">Amber</option>
@@ -117,9 +119,8 @@ $data = $request->fetch();
 				<option value="5">Black</option>
 			</select>
 
-			<label for="BeerStyle">Style</label>
 			<select name="BeerStyle">
-				<option></option>
+				<option value="">Any style</option>
 				<option value="1">Lager / Pils</option>
 				<option value="2">Porter</option>
 				<option value="3">Stout</option>
@@ -128,6 +129,11 @@ $data = $request->fetch();
 				<option value="6">Double IPA / Imperial IPA</option>
 				<option value="7">Barleywine</option>
 			</select>
+			
+			<label for="MinAlc">Alc:</label>
+			<input type="number" name="MinAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Min">
+			<input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
+			
 
 		</form>
 
@@ -138,8 +144,24 @@ $data = $request->fetch();
 				echo '<div class="BeerSearchResults">
                 <a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
 				<h3><strong>Name: ' . $data['Name'] . '</strong></h3>
+				Avg grade: ';
+				if ($data['Grade'] != 0) {
+					echo '<a class="stars">';
+					$i = 0;
+					while ($i < round($data['Grade'], 0, PHP_ROUND_HALF_ODD)) {
+						echo '★';
+						$i++;
+					}
+					while ($i < 5) {
+						echo '☆';
+						$i++;
+					}
+					echo '</a> ' . number_format($data['Grade'], 1);
+				} else {
+					echo '?';
+				}
+				echo  '<br>
 				Last modified: ' . $data['Last_modified'] . '<br>
-				Avg grade: ' . number_format($data['Grade'], 1) . ' / 5<br>
 				Alc: ' . $data['Alcohol'] . '<br>
 				Style: ' . $data['Style'] . '<br>
 				Color: ' . $data['Color'] . '<br>				

@@ -53,7 +53,7 @@ if (isset($_POST['create'])) {
 		<input type="text" name="BeerName" required><br><br>
 
 		<label for="BeerAlcohol">Alcohol level</label><br>
-		<input type="number" step="0.1" name="BeerAlcohol" required><br><br>
+		<input type="number" step="0.1" min="0" max="67.5" name="BeerAlcohol" required><br><br>
 
 		<label for="BeerColor">Color</label><br>
 		<select name="BeerColor" required>
