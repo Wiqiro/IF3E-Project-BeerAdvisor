@@ -38,7 +38,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     }
     $com_data = null;
     if ($result_friend == 1 || $profileid == $id) {
-        $query = "SELECT User_ID, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
+        $query = "SELECT C.ID As ID, User_ID, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
 		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ? ORDER BY ";
 
         if (isset($_GET['Sort'])) {

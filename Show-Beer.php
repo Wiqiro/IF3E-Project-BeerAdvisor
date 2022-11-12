@@ -128,8 +128,12 @@ if (isset($_GET['id'])) {
 			Alc: ' . $beer_data['Alcohol'] . '<br>
 			Style: ' . $beer_data['Style'] . '<br>
 			Color: ' . $beer_data['Color'] . '<br>'	;
-			if (isset($_SESSION['Admin'])) {
-				echo '<br><a href="delete-beer.php?id=' . $_GET['id'] . '" onclick="return confirm(`Are you sure you want to delete this beer ?`);"><u>Delete this beer</u></a>';
+			if (isset($_SESSION['ID'])) {
+				echo '<br><a href="Edit-beer.php?id=' . $_GET['id'] . '"><u>Edit this beer</u></a>';
+				
+				if (isset($_SESSION['Admin'])) {
+					echo '<br><a href="delete-beer.php?id=' . $_GET['id'] . '" onclick="return confirm(`Are you sure you want to delete this beer ?`);"><u>Delete this beer</u></a>';
+				}
 			}
       	?>
 		<hr>

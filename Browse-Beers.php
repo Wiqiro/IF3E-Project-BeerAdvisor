@@ -67,11 +67,11 @@ $request->execute();
 $data = $request->fetch();
 
 
-$color_req = $bdd->prepare("SELECT * FROM color ORDER BY ID");
+$color_req = $bdd->prepare("SELECT * FROM color WHERE ID != 0 ORDER BY ID");
 $color_req->execute();
 $color_data = $color_req->fetch();
 
-$style_req = $bdd->prepare("SELECT * FROM style ORDER BY ID");
+$style_req = $bdd->prepare("SELECT * FROM style WHERE ID != 0 ORDER BY ID");
 $style_req->execute();
 $style_data = $style_req->fetch();
 	

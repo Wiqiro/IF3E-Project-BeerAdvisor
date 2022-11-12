@@ -7,5 +7,6 @@ if (isset($_GET['id']) && isset($_SESSION['ID']) && (isset($_SESSION['Admin']) |
     $request = $bdd->prepare("DELETE FROM comment WHERE ID = ?");
     $request->execute(array($_GET['id']));
 
-    header("Location:Browse-Beers.php");
+    header("Location:".$_SERVER['HTTP_REFERER']);
+    
 }

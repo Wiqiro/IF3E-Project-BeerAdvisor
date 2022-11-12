@@ -3,7 +3,14 @@ session_start();
 require_once("connection.php");
 global $bdd;
 
-if (isset($_POST['create'])) {
+if (isset($_GET['id'])) {
+	$req = $bdd->prepare("SELECT * FROM beer WHERE id = ?");
+	$req->execute(array($_GET['id']));
+	$res = $req->fetch();
+}
+
+if (isset($_POST['confirm']) && isset($_SESSION['ID'])) {
+
 	$name = htmlspecialchars($_POST['BeerName']);
 	$color = htmlspecialchars($_POST['BeerColor']);
 	$ibu = htmlspecialchars($_POST['BeerIBU']);
@@ -11,13 +18,13 @@ if (isset($_POST['create'])) {
 	$style = htmlspecialchars($_POST['BeerStyle']);
 	$date = date("Y-m-d H:i:s");
 
-	$query = "INSERT INTO beer(name, alcohol, color_id, style_id, ibu, last_modified) VALUES(?,?,?,?,?,?)";
+	$query = "UPDATE beer SET Name = ?, Alcohol = ?, Color_id = ?, Style_id = ?, Ibu = ?, Last_modified = ? WHERE ID = ?";
 	$request = $bdd->prepare($query);
-	$request->execute(array($name, $alcohol, $color, $style, $ibu, $date));
+	$request->execute(array($name, $alcohol, $color, $style, $ibu, $date, $res['ID']));
 
 	
-	header("Location:Browse-Beers.php");
-} 
+	header("Location:Show-Beer.php?id=" . $_GET['id']);
+}
 $color_req = $bdd->prepare("SELECT * FROM color ORDER BY ID");
 $color_req->execute();
 $color_data = $color_req->fetch();
@@ -41,7 +48,7 @@ $style_data = $style_req->fetch();
 	<!-- HEADER -->
 	<div class="header">
 		<div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-		<div class="header_title">Add a beer</div>
+		<div class="header_title">Edit beer</div>
 		<div class="header_buttons">
 			<?php
             if (isset($_SESSION['ID'])) {
@@ -61,42 +68,47 @@ $style_data = $style_req->fetch();
 	 <form action="" method="post" enctype="multipart/form-data">
 		<label for="BeerName">Name of the beer</label><br>
          <label>
-            <input type="text" name="BeerName" required>
+		 
+            <input type="text" name="BeerName" value="<?php echo $res['Name']?>" required>
          </label><br><br>
 
 		<label for="BeerAlcohol">Alcohol level</label><br>
-        <label>
-            <input type="number" step="0.1" min="0" max="67.5" name="BeerAlcohol" required>
-        </label><br><br>
+        <input type="number" step="0.1" min="0" max="67.5" name="BeerAlcohol" value="<?php echo $res['Alcohol']?>" required><br><br>
 
 		<label for="BeerColor">Color</label><br>
-			<label>
-				<select name="BeerColor">
-					<?php
-					while ($color_data != null) {
-						echo '<option value="' . $color_data['ID'] . '">' . $color_data['Color'] . '</option>';
-						$color_data = $color_req->fetch();
+			<select name="BeerColor" value="<?php echo $res['Color_ID']?>">
+				<?php
+				while ($color_data != null) {
+					echo '<option value="' . $color_data['ID'] . '"';
+					if ($color_data['ID'] == $res['Color_ID']) {
+						echo ' selected ';
 					}
-					?>
-				</select>
-         </label><br><br>
+					echo '>' . $color_data['Color'] . '</option>';
+					$color_data = $color_req->fetch();
+				}
+				?>
+			</select><br><br>
 
 		<label for="BeerStyle">Style</label><br>
 		<select name="BeerStyle" id="Style" required>
 			<?php
 			while ($style_data != null) {
-				echo '<option value="' . $style_data['ID'] . '">' . $style_data['Style'] . '</option>';
+				echo '<option value="' . $style_data['ID'] . '"';
+					if ($style_data['ID'] == $res['Style_ID']) {
+						echo ' selected ';
+					}
+					echo '>' . $style_data['Style'] . '</option>';
 				$style_data = $style_req->fetch();
 			}
 			?>
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU"><br><br>
-		<input type="file" name="image" accept=".jpg, .jpeg, .png">
+		<input type="number" name="BeerIBU" value="<?php echo $res['IBU']?>"><br><br>
+		<!-- <input type="file" name="image" accept=".jpg, .jpeg, .png"> -->
 		<br>
 
-		<input type="submit" value="Create" name="create">
+		<input type="submit" value="Confirm" name="confirm">
 
 	 </form>
 
