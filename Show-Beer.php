@@ -64,7 +64,7 @@ if (isset($_GET['id'])) {
 	<body>
 		<!-- HEADER -->
 		<div class="header">
-			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+			<div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 			<div class="header_title">Beer review</div>
 			<div class="header_buttons">
 				<?php
@@ -109,11 +109,9 @@ if (isset($_GET['id'])) {
 					<option value=5>5 / 5</option>	
 				</select>
 				<input type="file" name="image" accept=".jpg, .jpeg, .png">
-
 				<input type="submit" value="Add review" name="create">
 		</form>
 		<hr>
-
 		<div class="CommentContainer">
 		<?php
 			while ($com_data != null) {

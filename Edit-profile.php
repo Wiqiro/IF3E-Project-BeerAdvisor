@@ -43,14 +43,15 @@ if(isset($_POST['confirm'])){
 <body>
   <!-- HEADER -->
   <div class="header">
-        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+        <div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
         <div class="header_title">Profile</div>
         <div class="header_buttons">
         <?php
         if (isset($_SESSION['ID'])) {
-            echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+            echo '<button class="" onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
             <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
-        } else {
+        }
+        if($_SESSION['ID'] == 0) {
             echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
             <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
         }
@@ -60,15 +61,13 @@ if(isset($_POST['confirm'])){
     <hr>
     <!-- HEADER -->
     <form action="" method="post" enctype="multipart/form-data">
-
-        <div class="container">
-
+        <div id="center">
             <table>
                 <tr>
                     <td>
-                        <label for="username">Username:</label>
+                        <label for="username">Username :</label>
                         <input type="text" name="username" id="username" placeholder="Username" value="<?php echo $username ?>" required>
-                        <label for="bio">Bio:</label>
+                        <label for="bio">Bio :</label>
                         <input type="text" name="bio" id="bio" placeholder="bio" value="<?php echo $bio ?>">
                         <label for="image">Profile picture:</label>
                         <input type="file" name="image" accept=".jpg, .jpeg, .png">
@@ -80,7 +79,8 @@ if(isset($_POST['confirm'])){
                     </td>
                 </tr>
             </table>
-            <input class="registerbtn" type="submit" name="confirm" value="Edit profile">
+            <br>
+            <input class="" type="submit" name="confirm" value="Edit profile">
         </div>
     </form>
 

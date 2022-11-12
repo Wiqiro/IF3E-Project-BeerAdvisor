@@ -75,17 +75,17 @@ $data = $request->fetch();
 	<body>
 		<!-- HEADER -->
 		<div class="header">
-			<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+			<div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 			<div class="header_title">Browse beers</div>
 			<div class="header_buttons">
 				<?php
-				if (isset($_SESSION['ID'])) {
-					echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
-					<button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
-				} else {
-					echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
-					<button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
-				}
+                if ($_SESSION['ID'] != 0) {
+                    echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+                <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+                } else {
+                    echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
+                <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
+                }
 				?>
 			</div>
 		</div>
@@ -95,7 +95,6 @@ $data = $request->fetch();
 			<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search">
 			You can also <u><a href="Add-beer.php">add a beer</a></u>
 			<br>
-
 			<label for="SortBy">Sort by</label>
 			<select name="SortBy">
 				<option value="DateDesc">Date: New to old</option>
@@ -132,18 +131,20 @@ $data = $request->fetch();
 
 		</form>
 
-		<div class="BeerSearchResults">
+		<div >
 			<?php
 			while ($data != null) {
-				echo '<a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
+
+				echo '<div class="BeerSearchResults">
+                <a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
 				<h3><strong>Name: ' . $data['Name'] . '</strong></h3>
 				Last modified: ' . $data['Last_modified'] . '<br>
 				Avg grade: ' . number_format($data['Grade'], 1) . ' / 5<br>
 				Alc: ' . $data['Alcohol'] . '<br>
 				Style: ' . $data['Style'] . '<br>
 				Color: ' . $data['Color'] . '<br>				
-				</a><br><br>';
-
+				</a><br><br>
+				</div>';
 				$data = $request->fetch();
 			}?>
 			

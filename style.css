@@ -22,25 +22,46 @@
 
 .header_title {
     text-align: center;
-    font-size: 50;
+    font-size: 50px;
     font-weight: 600;
 }
 .header_buttons {
     text-align: right;
 }
 
-.sign_up{
-    text-align: center;
-    justify-content: center;
-}
 
-input[type=text], input[type=password], input[type=email]{
+
+input[type=text], input[type=password], input[type=email], input[type=date], textarea {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
-
+}
+input[type=search]{
+    width: 70%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+input[type=file]{
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+input[type=submit]{
+    padding: 0.5%;
+    margin: 5px 0 22px 20px;
+    border: none;
+    background: #ffe436;
+}
+select {
+    padding: 0.5%;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
 }
 
 input[type=date]{
@@ -69,15 +90,13 @@ input[type=date]{
     user-select: none;
 }
 
-.button input[name^="sign-up"]{
-    background-color: #8e9303;
+button {
+    background-color: beige;
     color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
+    padding: 8px 10px;
+    margin: 8px 0%;
     border: none;
     cursor: pointer;
-    width: 98%;
-    opacity: 0.9;
 }
 
 a:link{
@@ -97,6 +116,56 @@ a:visited{
 .comment {
     padding-bottom: 50px;
     display: block;
-    width: 80%;
+    width: 100%;
     word-wrap: break-word;
 }
+.BeerSearchResults {
+    width: 30%;
+    box-sizing: border-box;
+    margin: 30px auto ;
+    padding: 50px;
+    border-radius: 20px;
+    background-color: beige;
+    display: block;
+    word-wrap: break-word;
+
+}
+
+.sign{
+    width: 30%;
+    margin: 30px auto ;
+    padding: 50px 0px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: #b2b0b0;
+}
+
+table{
+    margin:  auto auto;
+}
+
+button{
+
+}
+
+hr{
+    color:grey;
+
+}
+.submit-button {
+
+    background: #B9DFFF;
+
+    color: #fff;
+
+    border: 1px solid #eee;
+
+    border-radius: 20px;
+
+    box-shadow: 5px 5px 5px #eee;
+
+    text-shadow:none;
+}
+
+

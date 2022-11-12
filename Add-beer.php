@@ -30,7 +30,7 @@ if (isset($_POST['create'])) {
 <body>
 	<!-- HEADER -->
 	<div class="header">
-		<div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+		<div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
 		<div class="header_title">Add a beer</div>
 		<div class="header_buttons">
 			<?php
@@ -65,7 +65,7 @@ if (isset($_POST['create'])) {
 		</select><br><br>
 
 		<label for="BeerStyle">Style</label><br>
-		<select name="BeerStyle" required>
+		<select name="BeerStyle" id="Style" required>
 			<option></option>
 			<option value="1">Lager / Pils</option>
 			<option value="2">Porter</option>

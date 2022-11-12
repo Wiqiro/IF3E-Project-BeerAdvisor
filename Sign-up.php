@@ -1,8 +1,7 @@
 <?php
 require_once("connection.php");
-
+session_start();
 global $bdd;
-
 if (isset($_POST['confirm'])) {
     $username = htmlspecialchars($_POST['username']);
     $date = date("Y-m-d");
@@ -49,16 +48,16 @@ if (isset($_POST['confirm'])) {
 
     <!-- HEADER -->
     <div class="header">
-        <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+        <div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
         <div class="header_title">Sign-up</div>
         <div class="header_buttons">
         <?php
-        if (isset($_SESSION['ID'])) {
+        if ($_SESSION['ID'] != 0) {
             echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
-            <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+                <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
         } else {
             echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
-            <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
+                <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
         }
         ?>
         </div>
@@ -66,8 +65,8 @@ if (isset($_POST['confirm'])) {
     <hr>
     <!-- HEADER -->
 
-<form name="formulaire" action="" method="post">
-    <div class="sign_up">
+<form method="post">
+    <div class="sign">
 
         <table>
             <td>

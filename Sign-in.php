@@ -38,12 +38,12 @@ if (isset($_POST['confirm'])) {
     <body class="body">
         <!-- HEADER -->
         <div class="header">
-            <div class="image"><a href="index.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
+            <div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
             <div class="header_title">Sign-in</div>
             <div class="header_buttons">
             <?php
-            if (isset($_SESSION['ID'])) {
-                echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+            if ($_SESSION['ID'] != 0) {
+                echo '<button id="header" onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
                 <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
             } else {
                 echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
@@ -54,10 +54,9 @@ if (isset($_POST['confirm'])) {
         </div>
         <hr>
         <!-- HEADER -->
-        <form action="" method="post">
-            <div class="">
-
-                <table class="sign_in">
+        <form method="post">
+            <div class="sign">
+                <table>
                     <tr>
                         <td>
                             <label for="username"></label>
