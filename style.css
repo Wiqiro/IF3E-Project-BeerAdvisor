@@ -88,6 +88,9 @@ input[type=date]{
     height : 250px;
     width : 250px;
     object-fit: cover;
+    border:solid;
+    border-color: black;
+    border-width: 1px;
 }
 
 .stars {
@@ -132,8 +135,8 @@ a:visited{
     box-sizing: border-box;
     margin: 30px auto ;
     padding: 50px;
-    border-radius: 20px;
-    background-color: beige;
+    border-radius: 5px;
+    background-color:  #e8e8e8;
     display: block;
     word-wrap: break-word;
 }
