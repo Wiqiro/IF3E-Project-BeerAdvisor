@@ -52,12 +52,15 @@ if (isset($_POST['confirm'])) {
         <div class="header_title">Sign-up</div>
         <div class="header_buttons">
         <?php
+        if (isset($_SESSION['Admin'])) {
+            echo '<button onclick="window.location.href=`Admin.php`">Manage</button> ';
+        }
         if (isset($_SESSION['ID'])) {
             echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
-                <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+            <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
         } else {
             echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
-                <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
+            <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
         }
         ?>
         </div>

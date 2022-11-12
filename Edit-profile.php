@@ -41,17 +41,19 @@ if(isset($_POST['confirm'])){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
-  <div class="header">
+    <!-- HEADER -->
+    <div class="header">
         <div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-        <div class="header_title">Profile</div>
+        <div class="header_title">Edit profile</div>
         <div class="header_buttons">
         <?php
-        if (isset($_SESSION['ID'])) {
-            echo '<button class="" onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
-            <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+        if (isset($_SESSION['Admin'])) {
+            echo '<button onclick="window.location.href=`Admin.php`">Manage</button> ';
         }
-        if($_SESSION['ID'] == 0) {
+        if (isset($_SESSION['ID'])) {
+            echo '<button onclick="window.location.href=`Profile.php?id=' . $_SESSION['ID'] . '`">Profile</button>
+            <button onclick="window.location.href=`sign-out.php`">Sign-out</button>';
+        } else {
             echo '<button onclick="window.location.href=`Sign-in.php`">Sign-in</button>
             <button onclick="window.location.href=`Sign-up.php`">Sign-up</button>';
         }
