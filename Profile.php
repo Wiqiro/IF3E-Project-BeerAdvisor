@@ -106,7 +106,8 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 
                 <?php
                 if ($result_friend != 0 && $id!=$profileid && $id!=0) {
-                    echo '<div>Following</div><br>';
+                    echo '<button class="" onclick="window.location.href=`Unfollow.php?id=' . $_GET['id'] . '`">Following</button> <br> <br>';
+
                 }
                 if($result_friend == 0 && $id!=$profileid && $id!=0){
                     echo '<form method="post">

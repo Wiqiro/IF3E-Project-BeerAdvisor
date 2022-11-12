@@ -104,7 +104,12 @@ button {
     margin: 5px 5px 10px 5px;
     border-style: solid;
     border-color: #000000;
+    cursor: pointer;
     background: #ffffff;
+}
+button:hover {
+    cursor: pointer;
+    
 }
 
 a:link{
@@ -154,9 +159,6 @@ table{
     margin:  auto auto;
 }
 
-button{
-
-}
 
 hr{
     color:grey;
