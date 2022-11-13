@@ -38,8 +38,12 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     }
     $com_data = null;
     if ($result_friend == 1 || $profileid == $id) {
-        $query = "SELECT C.ID As ID, User_ID, Username, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
-		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ? ORDER BY ";
+        /* $query = "SELECT C.ID As ID, User_ID, Username, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
+		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ? ORDER BY "; */
+        $query = "SELECT C.ID As ID, C.User_ID AS User_ID, Username, C.Beer_ID AS Beer_ID, B.Name AS Name, C.Text AS Text, C.Grade AS Grade, 
+        DATE_FORMAT(C.Date, '%D %b. %Y at %H:%i') AS Date, C.Date AS RawDate, C.Picture AS Picture, AVG(C2.Grade) As Avg, COUNT(C2.Grade) AS Count 
+		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID INNER JOIN comment C2 ON C2.Beer_ID = B.ID 
+        WHERE U.ID = ? GROUP BY C.id ORDER BY ";
 
         if (isset($_GET['Sort'])) {
             $sorting = $_GET['SortBy'];
@@ -50,11 +54,23 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
             case "RatingAsc":
                 $query = $query . "Grade ASC";
                 break;
+            case "AvgRatingDesc":
+                $query = $query . "Avg DESC";
+                break;
+            case "AvgRatingAsc":
+                $query = $query . "Avg ASC";
+                break;
             case "DateDesc":
                 $query = $query . "RawDate DESC";
                 break;
             case "DateAsc":
                 $query = $query . "RawDate ASC";
+                break;
+            case "RevDesc":
+                $query = $query . "Count DESC";
+                break;
+            case "RevAsc":
+                $query = $query . "Count ASC";
                 break;
             default:
                 break;
@@ -140,10 +156,14 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 			
 			<label for="SortBy">Sort by</label>
 			<select name="SortBy">
-				<option value="DateDesc">Date: New to old</option>
-				<option value="DateAsc">Date: Old to new</option>
-				<option value="RatingDesc">Rating: High to low</option>
-				<option value="RatingAsc">Rating: Low to High</option>
+                <option value="DateDesc">Newest first</option>
+                <option value="DateAsc">Oldest first</option>
+                <option value="RatingDesc">Best grade first</option>
+                <option value="RatingAsc">Worst grade first</option>
+                <option value="AvgRatingDesc">Best avg. grade first</option>
+                <option value="AvgRatingAsc">Worst avg. grade first</option>
+                <option value="RevDesc">Most reviewed first</option>
+                <option value="RevAsc">Least reviewed first</option>
 			</select>
 
 			<input type="submit" value="Sort" name="Sort">
@@ -154,12 +174,19 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
                     echo '
 				<div class="comment">
 					<table><tr>
-						<th style="font-size: large"><a href="">' . $com_data['Username'] . '</a></th>
+                    <th style="font-size: large"><a href="">' . $com_data['Username'] . '</a></th>
 						<td style="font-size: smaller"> on </td> 
 						<th><a href="Show-Beer.php?id='. $com_data['Beer_ID'] . '">' . $com_data['Name'] . '</a></th>
-						<td style="font-size: smaller"> - the ' . $com_data['Date'] . ' - </td>
-						<td><p class="stars">';
-						
+						<td style="font-size: smaller"> - the ' . $com_data['Date'] . '</td>';
+                        if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
+                            echo '<td style="font-size: smaller"> - 
+                                <a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
+                            </td>';
+                        }
+                    echo '</tr></table>
+                    <table><tr>
+                        <td style="font-size: smaller">User grade:</td>
+                        <td><p class="stars" style="text-align: center">';
 						$i = 0;
 						while ($i < $com_data['Grade']) {
 							echo '★';
@@ -169,13 +196,23 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 							echo '☆';
 							$i++;
 						}
-						echo '</p></td>';
-						if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
-							echo '<td style="font-size: smaller"> - 
-								<a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
-							</td>';
+						echo '</p></td>
+                        <td style="font-size: smaller"> '. number_format($com_data['Grade'], 0) .' - Avg. grade:</td>
+                        <td><p class="stars" style="text-align: center">';
+						$i = 0;
+						while ($i < $com_data['Avg']) {
+							echo '★';
+							$i++;
 						}
-					echo '</tr></table>
+						while ($i < 5) {
+							echo '☆';
+							$i++;
+						}
+						echo '</p></td>
+                        <td style="font-size: smaller"> ' . number_format($com_data['Avg'], 1) . ' (' . $com_data['Count'] . ' review';
+					    if ($com_data['Count'] > 1) {echo 's';} echo ')
+                        </td>
+                    </tr></table>
 					<table><tr>
 						<td>
 							' . $com_data['Text'] . '

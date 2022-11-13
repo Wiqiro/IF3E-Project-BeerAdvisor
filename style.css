@@ -39,10 +39,6 @@
     vertical-align: top;
 }
 
-.admin_table {
-}
-
-
 input[type=text], input[type=password], input[type=email], input[type=date], textarea{
     width: 100%;
     padding: 15px;
@@ -120,9 +116,7 @@ button, input[type=submit] {
     cursor: pointer;
     background: #ffffff;
 }
-/* button:hover {
-    cursor: pointer;
-} */
+
 
 a:link{
     color: black;
@@ -144,6 +138,16 @@ a:visited{
     display: block;
     width: 100%;
     word-wrap: break-word;
+}
+
+.beer_search {
+    text-align: center;
+}
+
+.beer_search_center {
+    text-align: center;
+    height:max-content;
+    transform: translateY(100%);
 }
 
 .BeerSearchResults {

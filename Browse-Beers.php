@@ -4,7 +4,7 @@ require_once("connection.php");
 global $bdd;
 
 
-$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, Last_modified AS RawDate, AVG(C.grade) AS Grade 
+$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, Last_modified AS RawDate, AVG(C.grade) AS Grade, COUNT(C.grade) AS Count 
 		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
 		ON B.id = C.Beer_id ";
 
@@ -55,12 +55,19 @@ if (isset($_GET['SortBy'])) {
 	case "AlcDesc":
 		$query = $query . "Alcohol DESC";
 		break;
+	case "RevDesc":
+		$query = $query . "Count DESC";
+		break;
+	case "RevAsc":
+		$query = $query . "Count ASC";
+		break;
 	default:
 		break;
 	}
 } else {
 	$query = $query . "RawDate DESC";
 }
+$query = $query . ", Name ASC, RawDate DESC";
 
 $request = $bdd->prepare($query);
 $request->execute();
@@ -108,52 +115,60 @@ $style_data = $style_req->fetch();
 		</div>
 		<hr>
 		<!-- HEADER -->
-		<form action="" method="get">
-			<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search">
-			You can also <u><a href="Add-beer.php">add a beer</a></u>
+		<div class=<?php if (isset($_GET['search'])) {echo '"beer_search"';} else {echo '"beer_search_center"';}?>  >
 			<br>
-			<label for="SortBy">Sort by</label>
-			<select name="SortBy">
-				<option value="DateDesc">Date: New to old</option>
-				<option value="DateAsc">Date: Old to new</option>
-				<option value="RatingDesc">Rating: High to low</option>
-				<option value="RatingAsc">Rating: Low to High</option>
-				<option value="NameAsc">Name: A-Z</option>
-				<option value="NameDesc">Name: Z-A</option>
-				<option value="AlcAsc">Alcohol: Low to High</option>
-				<option value="AlcDesc">Alcohol: High to Low</option>
-			</select>
+			<form action="" method="get">
+				<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search">
+				<br>
+				<label for="SortBy">Sort by</label>
+				<select name="SortBy">
+					<option value="DateDesc">Newest first</option>
+					<option value="DateAsc">Oldest first</option>
+					<option value="RatingDesc">Best reviews first</option>
+					<option value="RatingAsc">Worst reviews first</option>
+					<option value="NameAsc">Alphabetical</option>
+					<option value="NameDesc">Alphabetical (reverse)</option>
+					<option value="AlcDesc">Highest alc. first</option>
+					<option value="AlcAsc">Lowest alc. first</option>
+					<option value="RevDesc">Most reviewed first</option>
+					<option value="RevAsc">Least reviewed first</option>
+				</select>
+	
+				<select name="BeerColor">
+					<option value="">Any color</option>
+					<?php
+					while ($color_data != null) {
+						echo '<option value="' . $color_data['ID'] . '">' . $color_data['Color'] . '</option>';
+						$color_data = $color_req->fetch();
+					}
+					?>
+				</select>
+				
+				<select name="BeerStyle">
+					<option value="">Any style</option>
+					<?php
+					while ($style_data != null) {
+						echo '<option value="' . $style_data['ID'] . '">' . $style_data['Style'] . '</option>';
+						$style_data = $style_req->fetch();
+					}
+					?>
+				</select>
+				
+				<label for="MinAlc">Alc:</label>
+				<input type="number" name="MinAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Min">
+				<input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
+				You can also <u><a href="Add-beer.php">add a beer</a></u>
+			</form>
 
-			<select name="BeerColor">
-				<option value="">Any color</option>
-				<?php
-				while ($color_data != null) {
-					echo '<option value="' . $color_data['ID'] . '">' . $color_data['Color'] . '</option>';
-					$color_data = $color_req->fetch();
-				}
-				?>
-			</select>
-
-			<select name="BeerStyle">
-				<option value="">Any style</option>
-				<?php
-				while ($style_data != null) {
-					echo '<option value="' . $style_data['ID'] . '">' . $style_data['Style'] . '</option>';
-					$style_data = $style_req->fetch();
-				}
-				?>
-			</select>
-			
-			<label for="MinAlc">Alc:</label>
-			<input type="number" name="MinAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Min">
-			<input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
-		</form>
-		<div >
-			<?php
+		</div>
+		<?php
+		if (isset($_GET['search'])) {
+			echo '<div>
+			<hr>';
 			while ($data != null) {
-
+	
 				echo '<div class="BeerSearchResults">
-                <a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
+				<a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
 				<h3><strong>Name: ' . $data['Name'] . '</strong></h3>
 				Avg grade: ';
 				if ($data['Grade'] != 0) {
@@ -167,7 +182,9 @@ $style_data = $style_req->fetch();
 						echo '☆';
 						$i++;
 					}
-					echo '</a> ' . number_format($data['Grade'], 1);
+					echo '</a> ' . number_format($data['Grade'], 1) . ' (' . $data['Count'] . ' review';
+					if ($data['Count'] > 1) {echo 's';}
+					echo ')';
 				} else {
 					echo '?';
 				}
@@ -179,9 +196,8 @@ $style_data = $style_req->fetch();
 				</a><br><br>
 				</div>';
 				$data = $request->fetch();
-			}?>
-			
-		</div>
-		
+			}
+			echo '</div>';
+		} ?>
 	</body>
 </html>
