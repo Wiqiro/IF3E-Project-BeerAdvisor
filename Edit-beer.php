@@ -17,13 +17,25 @@ if (isset($_POST['confirm']) && isset($_SESSION['ID'])) {
 	$alcohol = htmlspecialchars($_POST['BeerAlcohol']);
 	$style = htmlspecialchars($_POST['BeerStyle']);
 	$date = date("Y-m-d H:i:s");
-
-	$query = "UPDATE beer SET Name = ?, Alcohol = ?, Color_id = ?, Style_id = ?, Ibu = ?, Last_modified = ? WHERE ID = ?";
-	$request = $bdd->prepare($query);
-	$request->execute(array($name, $alcohol, $color, $style, $ibu, $date, $res['ID']));
+	if (isset($_FILES['image']['tmp_name']) && $_FILES['image']['tmp_name'] != '') {
+		$size = filesize($_FILES['image']['tmp_name']);
+		if ($size < 1000000) {
+			$image = file_get_contents($_FILES['image']['tmp_name']);
+		}
+	}
+	if (!isset($size)) {
+		$query = "UPDATE beer SET Name = ?, Alcohol = ?, Color_id = ?, Style_id = ?, Ibu = ?, Last_modified = ? WHERE ID = ?";
+		$request = $bdd->prepare($query);
+		$request->execute(array($name, $alcohol, $color, $style, $ibu, $date, $res['ID']));
+		header("Location:Show-Beer.php?id=" . $_GET['id']);
+	} else if ($size < 1000000) {
+		$query = "UPDATE beer SET Name = ?, Alcohol = ?, Color_id = ?, Style_id = ?, Ibu = ?, Last_modified = ?, Picture = ? WHERE ID = ?";
+		$request = $bdd->prepare($query);
+		$request->execute(array($name, $alcohol, $color, $style, $ibu, $date, $image, $res['ID']));
+		header("Location:Show-Beer.php?id=" . $_GET['id']);
+	}
 
 	
-	header("Location:Show-Beer.php?id=" . $_GET['id']);
 }
 $color_req = $bdd->prepare("SELECT * FROM color ORDER BY ID");
 $color_req->execute();
@@ -68,12 +80,10 @@ $style_data = $style_req->fetch();
     <!-- HEADER -->
 
 
-	 <form action="" method="post" enctype="multipart/form-data">
+	 <form style="margin: 20px" action="" method="post" enctype="multipart/form-data">
 		<label for="BeerName">Name of the beer</label><br>
-         <label>
 		 
-            <input type="text" name="BeerName" value="<?php echo $res['Name']?>" required>
-         </label><br><br>
+            <input type="text" name="BeerName" maxlength="100" style="max-width:238px" value="<?php echo $res['Name']?>" required><br><br>
 
 		<label for="BeerAlcohol">Alcohol level</label><br>
         <input type="number" step="0.1" min="0" max="67.5" name="BeerAlcohol" value="<?php echo $res['Alcohol']?>" required><br><br>
@@ -107,9 +117,16 @@ $style_data = $style_req->fetch();
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU" value="<?php echo $res['IBU']?>"><br><br>
-		<!-- <input type="file" name="image" accept=".jpg, .jpeg, .png"> -->
-		<br>
+		<input type="number" name="BeerIBU" min="0" max="1000" value="<?php echo $res['IBU']?>"><br><br>
+		
+		<label for="image">Picture</label><br>
+		<input type="file" name="image" accept=".jpg, .jpeg, .png">
+		<?php
+		if (isset($size) && $size >= 1000000) {
+			echo "The maximum upload size is 1 mb";
+		}
+		?>
+		<br><br>
 
 		<input type="submit" value="Confirm" name="confirm">
 

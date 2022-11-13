@@ -119,7 +119,13 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
             <table><tr>
                 <td>
 					<div class="image" ><?php
-                  echo '<img id="profile_picture" src="data:image;base64,' . base64_encode($profile_data["Picture"]) . '" alt=""/>'; ?></div>
+                    if ($profile_data["Picture"] != '') {
+                        echo '<img id="profile_picture" src="data:image;base64,' . base64_encode($profile_data["Picture"]) . '" alt=""/>'; 
+                    } else {
+                        echo '<img id="profile_picture" src="empty_profile.jpeg" alt=""/>'; 
+                    }
+                    ?>
+                    </div>
                 </td>
                 <td>
 

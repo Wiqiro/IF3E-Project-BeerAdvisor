@@ -7,20 +7,18 @@ global $bdd;
 if (isset($_GET['id'])) {
 	$beer_id = $_GET['id'];
 	
-	
-	
 	if (isset($_POST['create'])) {
 		if (isset($_SESSION['ID'])) {
 			$user_id = $_SESSION['ID'];
+			$text = $_POST['text'];
+			$grade = htmlspecialchars($_POST['grade']);
+			$date = date("Y-m-d H:i:s");
 			if (isset($_FILES['image']['tmp_name']) && $_FILES['image']['tmp_name'] != '') {
 				$size = filesize($_FILES['image']['tmp_name']);
 				if ($size < 1000000) {
 					$image = file_get_contents($_FILES['image']['tmp_name']);
 				}
 			}
-			$text = $_POST['text'];
-			$grade = htmlspecialchars($_POST['grade']);
-			$date = date("Y-m-d H:i:s");
 			if (!isset($size)) {
 				$query = "INSERT INTO comment(user_ID, beer_id, text, grade, date) VALUES(?,?,?,?,?)";
 				$request = $bdd->prepare($query);
@@ -35,7 +33,7 @@ if (isset($_GET['id'])) {
 		}
 	}
 		
-	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, AVG(C.grade) AS Grade 
+	$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, B.Picture AS Picture, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, AVG(C.grade) AS Grade 
 		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
 		ON B.id = C.Beer_id WHERE B.ID = ?";
 	$request = $bdd->prepare($query);
@@ -88,7 +86,7 @@ if (isset($_GET['id'])) {
 		<!-- HEADER -->
 			<div class="header">
 			<div class="image"><a href="Browse-Beers.php"><img src="BeerAdvisor.png" alt="logo"></a></div>
-			<div class="header_title">Browse beers</div>
+			<div class="header_title">Review</div>
 			<div class="header_buttons">
 			<?php
 			if (isset($_SESSION['Admin'])) {
@@ -106,9 +104,12 @@ if (isset($_GET['id'])) {
 		</div>
 		<hr>
 		<!-- HEADER -->
-
+		
+		<table style="width:100%"><tr>
+		<td>
 		<?php
-			echo '<h3><strong>Beer: ' . $beer_data['Name'] . '</strong></h3>
+			echo '<h3>
+			<strong>Beer: ' . $beer_data['Name'] . '</strong></h3>
 			Avg grade: ';
 			if ($beer_data['Grade'] != 0) {
 				echo '<a class="stars">';
@@ -127,10 +128,12 @@ if (isset($_GET['id'])) {
 			}
 			
 			echo '<br>
+				
 			Last modified: ' . $beer_data['Last_modified'] . '<br>
 			Alc: ' . $beer_data['Alcohol'] . '<br>
 			Color: ' . $beer_data['Color'] . '<br>
 			Style: ' . $beer_data['Style'] . '<br>';
+			
 			if (isset($_SESSION['ID'])) {
 				echo '<br><a href="Edit-beer.php?id=' . $_GET['id'] . '"><u>Edit this beer</u></a>';
 				
@@ -138,16 +141,21 @@ if (isset($_GET['id'])) {
 					echo '<br><a href="delete-beer.php?id=' . $_GET['id'] . '" onclick="return confirm(`Are you sure you want to delete this beer ?`);"><u>Delete this beer</u></a>';
 				}
 			}
-      	?>
+			?>
+			</td>
+			<td style="text-align: right">
+				<?php
+				if ($beer_data["Picture"] != '')
+					echo '<img class="beer_image" src="data:image;base64,' . base64_encode($beer_data["Picture"]) . '" alt=""/>';
+				?>
+			</td>
+			</tr></table>
+			
+      	
 		<hr>
 		<form action="" method="post" enctype="multipart/form-data">
 				<h3><strong>Add your review</h3></strong>
 				
-				<?php
-				if (isset($size) && $size >= 1000000) {
-					echo "The maximum upload size is 1 mb";
-				}
-				?>
 				<textarea name="text" id="text" required minlength="10" maxlength="300" class="new_comment" placeholder="Add your own review"></textarea><br>
 				<label for="grade">Grade</label>
 				<select name="grade" id="grade" required>
@@ -160,7 +168,11 @@ if (isset($_GET['id'])) {
 				</select>
 				<input type="file" name="image" accept=".jpg, .jpeg, .png">
 				<input type="submit" value="Add review" name="create">
-				<?php
+			<?php
+		
+			if (isset($size) && $size >= 1000000) {
+				echo "The maximum upload size is 1 mb";
+			}
 			if (isset($login_message)) {
 				echo $login_message;
 			} ?>
@@ -185,7 +197,7 @@ if (isset($_GET['id'])) {
 			while ($com_data != null) {
 				echo '
 				<div class="comment">
-					<table><tr>
+					<table style="text-align: center"><tr>
 						<th style="font-size: large"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '</a></th>
 						<td style="font-size: smaller"> on </td> 
 						<th><a href="">' . $beer_data['Name'] . '</a></th>
@@ -210,15 +222,18 @@ if (isset($_GET['id'])) {
 							</td>';
 						}
 					echo '</tr></table>
-					<table><tr>
-						<td>
+					<table style="text-align: center">
+						<tr><td>
 							' . $com_data['Text'] . '
-						</td>
-						<td>
-							<img width="250" height="350" style="object-fit : cover" id="profile_picture" src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
-						</td>
-					</tr></table><br>
-				</div>'	;
+						</td></tr>';
+
+						if ($com_data['Picture'] != '') {
+							echo '<tr><td>
+							<img class="comment_image" src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
+							</td></tr>';
+						}
+					echo '</table><br>
+				</div>';
 
 				$com_data = $request->fetch();
 			}

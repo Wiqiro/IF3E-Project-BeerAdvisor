@@ -42,7 +42,7 @@
 input[type=text], input[type=password], input[type=email], input[type=date], textarea{
     width: 100%;
     padding: 15px;
-    margin: 5px 0 22px 0;
+    margin: 5px 0 5 0;
     border-style: solid;
     border-color: #000000;
     background: #ffffff;
@@ -50,30 +50,31 @@ input[type=text], input[type=password], input[type=email], input[type=date], tex
 
 input[type=search]{
     width: 70%;
-    padding: 10px;
-    margin: 5px 0 22px 0;
+    padding: 20px;
+    margin: 5px 0 5 0;
     border-style: solid;
     border-color: #000000;
     background: #ffffff;
 }
 input[type=file]{
     width: 500px;
-    padding: 10px;
-    margin: 5px 0 22px 0;
+    padding: 8px;
+    margin: 5px 0 5 0;
     border-style: solid;
+    border-width: 2px;
     border-color: #000000;
     background: #ffffff;
 }
 input[type=submit], input[type=number]{
-    padding: 5px;
-    margin: 5px 5px 10px 5px;
+    padding: 10px;
+    margin: 5px 0 5 0;
     border-style: solid;
     border-color: #000000;
     background: #ffffff;
 }
 select {
-    padding: 0.5%;
-    margin: 5px 0 22px 0;
+    padding: 10px;
+    margin: 5px 0 5 0;
     border-style: solid;
     border-color: #000000;
     background: #ffffff;
@@ -82,7 +83,7 @@ select {
 input[type=date]{
     width: 100%;
     padding: 15px;
-    margin: 5px 0 22px 0;
+    margin: 5px 0 5 0;
     border-style: solid;
     border-color: #000000;
     background: #ffffff;
@@ -110,8 +111,8 @@ input[type=date]{
 }
 
 button, input[type=submit] {
-    padding: 5px;
-    margin: 5px 5px 10px 5px;
+    padding: 10px;
+    margin: 5px 0 5 0;
     border-style: solid;
     border-color: #000000;
     cursor: pointer;
@@ -141,6 +142,17 @@ a:visited{
     word-wrap: break-word;
 }
 
+.comment_image {
+    max-height:300;
+    min-height:100px;
+    min-width:100px;
+    max-width:1000px;
+}
+
+.center {
+    text-align: center;
+}
+
 .beer_search {
     text-align: center;
 }
@@ -160,6 +172,19 @@ a:visited{
     background-color:  #e8e8e8;
     display: block;
     word-wrap: break-word;
+    min-width: 40%;
+    justify-content: left;
+
+
+}
+
+.beer_image {
+    height: 300px;
+    min-width:100px;
+    max-width:250px;
+    object-fit: cover;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .sign{

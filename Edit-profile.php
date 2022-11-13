@@ -73,9 +73,10 @@ if(isset($_POST['confirm'])){
                         <textarea name="bio" id="bio" placeholder="Bio" maxlength="300" class="new_bio"><?php echo $bio ?></textarea>
                         <label for="image">Profile picture:</label>
                         <input type="file" name="image" accept=".jpg, .jpeg, .png">
+                        <a href="delete-profile-picture.php?id=<?php echo $id ?>"><u>Delete picture</u></a>
                         <?php 
                         if (isset($size) && $size >= 1000000) {
-                            echo "The maximum upload size is 1 mb";
+                            echo "<br>  The maximum upload size is 1 mb";
                         }
                         ?>
                     </td>
@@ -87,7 +88,5 @@ if(isset($_POST['confirm'])){
 
         </div>
     </form>
-
-
 
 </body>

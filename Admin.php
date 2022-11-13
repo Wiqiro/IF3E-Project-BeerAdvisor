@@ -91,7 +91,7 @@ $style_data = $style_req->fetch();
                     <form action="" class="admin_form" method="get">
                     <input type="hidden" name="color_id" value="' . $color_data['ID'] . '">
                     <table><tr>
-                        <td><input type="text" name="color_new_name" value="'. $color_data['Color'] . '" required></td>
+                        <td><input type="text" name="color_new_name" value="'. $color_data['Color'] . '" maxlength="100" required></td>
                         <td><input type="submit" name="edit_color" value="Edit"></td>
                         <td><input type="submit" onclick="return confirm(`Are you sure you want to delete this color ?\n(Warning: All linked beers will lose their color)`);" name="delete_color" value="&nbsp-&nbsp"></td>
                     </tr></table>
@@ -113,7 +113,7 @@ $style_data = $style_req->fetch();
                     <form action="" class="admin_form" method="get">
                     <input type="hidden" name="style_id" value="' . $style_data['ID'] . '">
                     <table><tr>
-                        <td><input type="text" name="style_new_name" value="'. $style_data['Style'] . '" required></td>
+                        <td><input type="text" name="style_new_name" value="'. $style_data['Style'] . '" maxlength="100" required></td>
                         <td><input type="submit" name="edit_style" value="Edit"></td>
                         <td><input type="submit" onclick="return confirm(`Are you sure you want to delete this style ?\n(Warning: All linked beers will lose their style)`);" name="delete_style" value="&nbsp-&nbsp"></td>
                     </tr></table>

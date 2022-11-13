@@ -169,20 +169,25 @@ $style_data = $style_req->fetch();
                 <label>
                     <input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
                 </label>
-                You can also <u><a href="Add-beer.php">add a beer</a></u>
+				<?php if (isset($_SESSION['ID'])) {echo 'You can also <u><a href="Add-beer.php">add a beer</a></u>';} ?>
+                
 			</form>
 
-		</div>
+		</div><br>
 		<?php
 		if (isset($_GET['search'])) {
-			echo '<div>
-			<hr>';
+			
+			echo '<div><hr>';
 			while ($data != null) {
 				echo '<div class="BeerSearchResults">
-                <table>
-                <tr>
+                <table style="width: 100%">
+                <tr style="vertical-align: top">
                 <td>';
-                    echo '<img width="250" height="350" style="object-fit : cover" id="profile_picture" src="data:image;base64,' . base64_encode($data["Picture"]) . '" alt=""/>';
+					if ($data['Picture'] != '') {
+						echo '<img class="beer_image" id="profile_picture" src="data:image;base64,' . base64_encode($data["Picture"]) . '" alt=""/>';
+					} else {
+						echo '<img class="beer_image" id="profile_picture" src="empty_beer.jpg" alt=""/>';
+					}
 				echo '</td>
 				<td>
 				<a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
@@ -207,13 +212,13 @@ $style_data = $style_req->fetch();
 				}
 				echo  '<br>
 
-	Last modified: ' . $data['Last_modified'] . '<br>
+				Last modified: ' . $data['Last_modified'] . '<br>
 				Alc: ' . $data['Alcohol'] . '<br>
 				Style: ' . $data['Style'] . '<br>
 				Color: ' . $data['Color'] . '<br>	
                     </td>			
 					</tr>
-				</a><br><br>
+				</a>
                 </table>
 				</div>';
 				$data = $request->fetch();
