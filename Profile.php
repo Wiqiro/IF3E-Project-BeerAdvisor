@@ -131,7 +131,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 
                 <?php
                 if ($result_friend != 0 && $id!=$profileid && $id!=0) {
-                    echo '<button class="" onclick="window.location.href=`Unfollow.php?id=' . $_GET['id'] . '`">Following</button> <br> <br>';
+                    echo '<button class="" onclick="window.location.href=`Unfollow.php?id=' . $_GET['id'] . '`">Unfollow</button> <br> <br>';
 
                 }
                 if($result_friend == 0 && $id!=$profileid && $id!=0){
@@ -219,14 +219,17 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
 					    if ($com_data['Count'] > 1) {echo 's';} echo ')
                         </td>
                     </tr></table>
-					<table><tr>
-						<td>
+					<table style="text-align: center">
+						<tr><td>
 							' . $com_data['Text'] . '
-						</td>
-						<td>
-							<img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
-						</td>
-					</tr></table><br>
+						</td></tr>';
+
+						if ($com_data['Picture'] != '') {
+							echo '<tr><td>
+							<img class="comment_image" src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
+							</td></tr>';
+						}
+					echo '</table><br>
 				</div>'	;
                     $com_data = $request->fetch();
                 }

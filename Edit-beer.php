@@ -117,7 +117,7 @@ $style_data = $style_req->fetch();
 		</select><br><br>
 
 		<label for="BeerIBU">IBU</label><br>
-		<input type="number" name="BeerIBU" min="0" max="1000" value="<?php echo $res['IBU']?>"><br><br>
+		<input type="number" name="BeerIBU" min="0" max="2600" value="<?php echo $res['IBU']?>"><br><br>
 		
 		<label for="image">Picture</label><br>
 		<input type="file" name="image" accept=".jpg, .jpeg, .png">
