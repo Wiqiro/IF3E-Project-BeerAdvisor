@@ -57,6 +57,7 @@ input[type=search]{
     background: #ffffff;
 }
 input[type=file]{
+    width: 500px;
     padding: 10px;
     margin: 5px 0 22px 0;
     border-style: solid;
@@ -162,12 +163,12 @@ a:visited{
 }
 
 .sign{
-    width: 30%;
+    width: 520px;
     margin: 30px auto ;
-    padding: 50px 0px;
+    padding: 30px 5px 5px ;
     text-align: center;
     justify-content: center;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: #e8e8e8;
 }
 

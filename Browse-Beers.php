@@ -4,7 +4,7 @@ require_once("connection.php");
 global $bdd;
 
 
-$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, Last_modified AS RawDate, AVG(C.grade) AS Grade, COUNT(C.grade) AS Count 
+$query = "SELECT B.ID AS ID, Name, Alcohol, IBU, Style, Color, DATE_FORMAT(Last_modified, '%D %b. %Y') AS Last_modified, B.Picture AS Picture, Last_modified AS RawDate, AVG(C.grade) AS Grade, COUNT(C.grade) AS Count 
 		FROM beer B INNER JOIN color ON color.ID = B.Color_ID INNER JOIN style ON style.ID = B.Style_ID LEFT JOIN comment C
 		ON B.id = C.Beer_id ";
 
@@ -118,46 +118,58 @@ $style_data = $style_req->fetch();
 		<div class=<?php if (isset($_GET['search'])) {echo '"beer_search"';} else {echo '"beer_search_center"';}?>  >
 			<br>
 			<form action="" method="get">
-				<input type="search" name="search" placeholder="Search a beer" size="100"><input type="submit" value="Search">
+                <label>
+                    <input type="search" name="search" placeholder="Search a beer" size="100">
+                </label><input type="submit" value="Search">
 				<br>
 				<label for="SortBy">Sort by</label>
-				<select name="SortBy">
-					<option value="DateDesc">Newest first</option>
-					<option value="DateAsc">Oldest first</option>
-					<option value="RatingDesc">Best reviews first</option>
-					<option value="RatingAsc">Worst reviews first</option>
-					<option value="NameAsc">Alphabetical</option>
-					<option value="NameDesc">Alphabetical (reverse)</option>
-					<option value="AlcDesc">Highest alc. first</option>
-					<option value="AlcAsc">Lowest alc. first</option>
-					<option value="RevDesc">Most reviewed first</option>
-					<option value="RevAsc">Least reviewed first</option>
-				</select>
-	
-				<select name="BeerColor">
-					<option value="">Any color</option>
-					<?php
-					while ($color_data != null) {
-						echo '<option value="' . $color_data['ID'] . '">' . $color_data['Color'] . '</option>';
-						$color_data = $color_req->fetch();
-					}
-					?>
-				</select>
-				
-				<select name="BeerStyle">
-					<option value="">Any style</option>
-					<?php
-					while ($style_data != null) {
-						echo '<option value="' . $style_data['ID'] . '">' . $style_data['Style'] . '</option>';
-						$style_data = $style_req->fetch();
-					}
-					?>
-				</select>
-				
-				<label for="MinAlc">Alc:</label>
-				<input type="number" name="MinAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Min">
-				<input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
-				You can also <u><a href="Add-beer.php">add a beer</a></u>
+                <label>
+                    <select name="SortBy">
+                        <option value="DateDesc">Newest first</option>
+                        <option value="DateAsc">Oldest first</option>
+                        <option value="RatingDesc">Best reviews first</option>
+                        <option value="RatingAsc">Worst reviews first</option>
+                        <option value="NameAsc">Alphabetical</option>
+                        <option value="NameDesc">Alphabetical (reverse)</option>
+                        <option value="AlcDesc">Highest alc. first</option>
+                        <option value="AlcAsc">Lowest alc. first</option>
+                        <option value="RevDesc">Most reviewed first</option>
+                        <option value="RevAsc">Least reviewed first</option>
+                    </select>
+                </label>
+
+                <label>
+                    <select name="BeerColor">
+                        <option value="">Any color</option>
+                        <?php
+                        while ($color_data != null) {
+                            echo '<option value="' . $color_data['ID'] . '">' . $color_data['Color'] . '</option>';
+                            $color_data = $color_req->fetch();
+                        }
+                        ?>
+                    </select>
+                </label>
+
+                <label>
+                    <select name="BeerStyle">
+                        <option value="">Any style</option>
+                        <?php
+                        while ($style_data != null) {
+                            echo '<option value="' . $style_data['ID'] . '">' . $style_data['Style'] . '</option>';
+                            $style_data = $style_req->fetch();
+                        }
+                        ?>
+                    </select>
+                </label>
+
+                <label for="MinAlc">Alc:</label>
+                <label>
+                    <input type="number" name="MinAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Min">
+                </label>
+                <label>
+                    <input type="number" name="MaxAlc" size="4" min="0" max="67.5" step="0.1" placeholder="Max">
+                </label>
+                You can also <u><a href="Add-beer.php">add a beer</a></u>
 			</form>
 
 		</div>
@@ -166,8 +178,13 @@ $style_data = $style_req->fetch();
 			echo '<div>
 			<hr>';
 			while ($data != null) {
-	
 				echo '<div class="BeerSearchResults">
+                <table>
+                <tr>
+                <td>';
+                    echo '<img width="250" height="350" style="object-fit : cover" id="profile_picture" src="data:image;base64,' . base64_encode($data["Picture"]) . '" alt=""/>';
+				echo '</td>
+				<td>
 				<a href="Show-Beer.php?id=' . $data['ID'] . '" class="BeerContainer">
 				<h3><strong>Name: ' . $data['Name'] . '</strong></h3>
 				Avg grade: ';
@@ -189,11 +206,15 @@ $style_data = $style_req->fetch();
 					echo '?';
 				}
 				echo  '<br>
-				Last modified: ' . $data['Last_modified'] . '<br>
+
+	Last modified: ' . $data['Last_modified'] . '<br>
 				Alc: ' . $data['Alcohol'] . '<br>
 				Style: ' . $data['Style'] . '<br>
-				Color: ' . $data['Color'] . '<br>				
+				Color: ' . $data['Color'] . '<br>	
+                    </td>			
+					</tr>
 				</a><br><br>
+                </table>
 				</div>';
 				$data = $request->fetch();
 			}

@@ -215,7 +215,7 @@ if (isset($_GET['id'])) {
 							' . $com_data['Text'] . '
 						</td>
 						<td>
-							<img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
+							<img width="250" height="350" style="object-fit : cover" id="profile_picture" src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
 						</td>
 					</tr></table><br>
 				</div>'	;
