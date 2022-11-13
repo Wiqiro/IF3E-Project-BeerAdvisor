@@ -38,7 +38,7 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
     }
     $com_data = null;
     if ($result_friend == 1 || $profileid == $id) {
-        $query = "SELECT C.ID As ID, User_ID, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
+        $query = "SELECT C.ID As ID, User_ID, Username, Beer_ID, B.Name AS Name, Text, Grade, DATE_FORMAT(Date, '%D %b. %Y at %H:%i') AS Date, Date AS RawDate, C.Picture AS Picture 
 		FROM user U INNER JOIN comment C ON U.ID = C.User_ID  INNER JOIN beer B ON B.ID = C.Beer_ID WHERE U.ID = ? ORDER BY ";
 
         if (isset($_GET['Sort'])) {
@@ -152,36 +152,39 @@ if (isset($_GET['id']) and $_GET['id'] > 0) {
             if(isset($com_data)){
                 while ($com_data != null) {
                     echo '
-                    <div class="comment">
-                        <table><tr>
-                            <th style="font-size: larger"> <a href="Show-Beer.php?id='. $com_data['Beer_ID'] . '">' . $com_data['Name'] . '<th>
-                            <td style="font-size: smaller">  on the ' . $com_data['Date'] . '</td>
-                            <td><p class="stars">';
-                            $i = 0;
-                            while ($i < $com_data['Grade']) {
-                                echo '★';
-                                $i++;
-                            }
-                            while ($i < 5) {
-                                echo '☆';
-                                $i++;
-                            }
-                            echo '</p></td>';
-                            if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
-                                echo '<td "> - 
-                                    <a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
-                                </td>';
-                            }
-                        echo '</tr></table>
-                        <table><tr>
-                            <td>
-                                ' . $com_data['Text'] . '
-                            </td>
-                            <td>
-                                <img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
-                            </td>
-                        </tr></table><br>
-                    </div>'	;
+				<div class="comment">
+					<table><tr>
+						<th style="font-size: large"><a href="">' . $com_data['Username'] . '</a></th>
+						<td style="font-size: smaller"> on </td> 
+						<th><a href="Show-Beer.php?id='. $com_data['Beer_ID'] . '">' . $com_data['Name'] . '</a></th>
+						<td style="font-size: smaller"> - the ' . $com_data['Date'] . ' - </td>
+						<td><p class="stars">';
+						
+						$i = 0;
+						while ($i < $com_data['Grade']) {
+							echo '★';
+							$i++;
+						}
+						while ($i < 5) {
+							echo '☆';
+							$i++;
+						}
+						echo '</p></td>';
+						if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
+							echo '<td style="font-size: smaller"> - 
+								<a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
+							</td>';
+						}
+					echo '</tr></table>
+					<table><tr>
+						<td>
+							' . $com_data['Text'] . '
+						</td>
+						<td>
+							<img src="data:image;base64,' . base64_encode($com_data["Picture"]) . '" alt=""/>
+						</td>
+					</tr></table><br>
+				</div>'	;
                     $com_data = $request->fetch();
                 }
             } else if ($_GET['id'] != 0 && $result_friend == 1){

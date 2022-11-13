@@ -105,7 +105,7 @@ if (isset($_POST['confirm'])) {
         </table>
 
         <hr>
-        <p class="">Already an account ? <a class="sign_up" href="Sign-in.php">Sign in</p>
+        <p class="">Already an account ? <a class="sign_up" href="Sign-in.php"><u>Sign-in</u></p>
     </div>
 </form>
 </body>

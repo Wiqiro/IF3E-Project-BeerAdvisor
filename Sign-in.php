@@ -81,9 +81,9 @@ if (isset($_POST['confirm'])) {
                 }
                 ?>
                 <input class="button" type="submit" name="confirm" alt="sign in" value="Sign in">
-                <p class="container">Forgot your password ?<a href="Change.php"> Change it</p>
+                <p class="container">Forgot your password ?<a href="Change.php"> <u>Change it</u></p>
                 <hr>
-                <p class="container">Not register yet ? <a href="Sign-up.php">Sign up</p>
+                <p class="container">Not register yet ? <a href="Sign-up.php"><u>Sign-up</u></p>
             </div>
         </form>
     </body>

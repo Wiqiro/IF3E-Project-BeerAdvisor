@@ -21,8 +21,9 @@ if (isset($_GET['delete_color'])) {
     $request->execute(array($_GET['color_new_name']));
 
 } else if (isset($_GET['delete_style'])) {
-    $request = $bdd->prepare("DELETE FROM style WHERE ID = ?");
-    $request->execute(array($_GET['style_id']));
+    $request = $bdd->prepare("UPDATE beer SET Style_ID = 0 WHERE Style_ID = ?;
+    DELETE FROM style WHERE ID = ?");
+    $request->execute(array($_GET['style_id'], $_GET['style_id']));
 } else if (isset($_GET['edit_style'])) {
     $request = $bdd->prepare("UPDATE style SET Style = ? WHERE ID = ?");
     $request->execute(array($_GET['style_new_name'], $_GET['style_id']));
@@ -92,7 +93,7 @@ $style_data = $style_req->fetch();
                     <table><tr>
                         <td><input type="text" name="color_new_name" value="'. $color_data['Color'] . '" required></td>
                         <td><input type="submit" name="edit_color" value="Edit"></td>
-                        <td><input type="submit" name="delete_color" value="&nbsp-&nbsp"></td>
+                        <td><input type="submit" onclick="return confirm(`Are you sure you want to delete this color ?\n(Warning: All linked beers will lose their color)`);" name="delete_color" value="&nbsp-&nbsp"></td>
                     </tr></table>
                     </form><br>';
                     $color_data = $color_req->fetch();
@@ -114,7 +115,7 @@ $style_data = $style_req->fetch();
                     <table><tr>
                         <td><input type="text" name="style_new_name" value="'. $style_data['Style'] . '" required></td>
                         <td><input type="submit" name="edit_style" value="Edit"></td>
-                        <td><input type="submit" name="delete_style" value="&nbsp-&nbsp"></td>
+                        <td><input type="submit" onclick="return confirm(`Are you sure you want to delete this style ?\n(Warning: All linked beers will lose their style)`);" name="delete_style" value="&nbsp-&nbsp"></td>
                     </tr></table>
                     </form><br>';
                     $style_data = $style_req->fetch();

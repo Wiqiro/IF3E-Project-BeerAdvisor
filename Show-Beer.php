@@ -186,7 +186,9 @@ if (isset($_GET['id'])) {
 				echo '
 				<div class="comment">
 					<table><tr>
-						<th style="font-size: larger"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '<th>
+						<th style="font-size: large"><a href="Profile.php?id='. $com_data['User_ID'] . '">' . $com_data['Username'] . '</a></th>
+						<td style="font-size: smaller"> on </td> 
+						<th><a href="">' . $beer_data['Name'] . '</a></th>
 						<td style="font-size: smaller"> - the ' . $com_data['Date'] . ' - </td>
 						<td><p class="stars">';
 						
@@ -201,7 +203,7 @@ if (isset($_GET['id'])) {
 						}
 						echo '</p></td>';
 						if (isset($_SESSION['Admin']) || (isset($_SESSION['ID']) && $com_data['User_ID'] == $_SESSION['ID'])) {
-							echo '<td "> - 
+							echo '<td style="font-size: smaller"> - 
 								<a href="delete-comment.php?id=' . $com_data['ID'] . '&user_id=' . $com_data['User_ID'] . '" onclick="return confirm(`Are you sure you want to delete this comment ?`);"><u style="font-size: smaller">Remove</u></a>
 							</td>';
 						}
